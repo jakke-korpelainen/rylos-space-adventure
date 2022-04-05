@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/rylos-space-adventure/static/css/main.8ae4f72b.chunk.css",
-    "main.js": "/rylos-space-adventure/static/js/main.15645d17.chunk.js",
-    "main.js.map": "/rylos-space-adventure/static/js/main.15645d17.chunk.js.map",
+    "main.js": "/rylos-space-adventure/static/js/main.b2682c72.chunk.js",
+    "main.js.map": "/rylos-space-adventure/static/js/main.b2682c72.chunk.js.map",
     "runtime-main.js": "/rylos-space-adventure/static/js/runtime-main.dc9b50ea.js",
     "runtime-main.js.map": "/rylos-space-adventure/static/js/runtime-main.dc9b50ea.js.map",
     "static/js/2.1f767306.chunk.js": "/rylos-space-adventure/static/js/2.1f767306.chunk.js",
@@ -37,6 +37,6 @@
     "static/js/runtime-main.dc9b50ea.js",
     "static/js/2.1f767306.chunk.js",
     "static/css/main.8ae4f72b.chunk.css",
-    "static/js/main.15645d17.chunk.js"
+    "static/js/main.b2682c72.chunk.js"
   ]
 }
