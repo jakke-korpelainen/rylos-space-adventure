@@ -13,7 +13,7 @@ const position = new THREE.Vector3()
 const direction = new THREE.Vector3()
 
 export default function Ship() {
-  const { nodes } = useLoader(GLTFLoader, '/ship.gltf')
+  const { nodes } = useLoader(GLTFLoader, '/rylos-space-adventure/ship.gltf')
   const mutation = useStore((state) => state.mutation)
   const { clock, mouse, ray } = mutation
   const lasers = useStore((state) => state.lasers)

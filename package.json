@@ -1,7 +1,8 @@
 {
-  "name": "space-game",
+  "name": "rylos-space-adventure",
   "version": "1.0.0",
-  "description": "A small demo that shows how to manage game entities.",
+  "description": "A promotional game for Rylos music",
+  "homepage": "https://jakke-korpelainen.github.io/rylos-space-adventure/",
   "keywords": [
     "zustand",
     "physics",
@@ -19,9 +20,12 @@
     "zustand": "3.4.1"
   },
   "devDependencies": {
+    "gh-pages": "^3.2.3",
     "typescript": "3.3.3"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",

@@ -4,7 +4,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import useStore from '../store'
 
 export default function Rocks() {
-  const gltf = useLoader(GLTFLoader, '/rock.gltf')
+  const gltf = useLoader(GLTFLoader, '/rylos-space-adventure/rock.gltf')
   const rocks = useStore((state) => state.rocks)
   return rocks.map((data) => <Rock {...gltf} key={data.guid} data={data} />)
 }
