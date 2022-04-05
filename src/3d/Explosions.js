@@ -26,7 +26,7 @@ function Explosion({ position, scale }) {
   const { dummy } = useStore((state) => state.mutation)
   const particles = useMemo(() => [make('white', 0.8), make('orange', 0.6)], [])
 
-  useEffect(() => void playAudio(new Audio(audio.mp3.explosion), 0.25), [])
+  useEffect(() => void playAudio(new Audio(audio.mp3.explosion), 0.2), [])
 
   useFrame(() => {
     particles.forEach(({ data }, type) => {

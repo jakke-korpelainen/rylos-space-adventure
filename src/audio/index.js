@@ -4,6 +4,7 @@ import engine2Audio from './engine2.mp3'
 import warpAudio from './warp.mp3'
 import clickAudio from './click.mp3'
 import explosionAudio from './explosion.mp3'
+import crashAudio from './crash.wav'
 
 import rylosFreakLustCover from '../images/rylos-freak-lust.png'
 import rylosFreakLustSong from './rylos-freak-lust.mp3'
@@ -46,6 +47,7 @@ const soundTrack = [
   }
 ]
 
+const crash = new Audio(crashAudio)
 const zap = new Audio(zapAudio)
 const engine = new Audio(engineAudio)
 const engine2 = new Audio(engine2Audio)
@@ -53,4 +55,4 @@ const warp = new Audio(warpAudio)
 const click = new Audio(clickAudio)
 const explosion = new Audio(explosionAudio)
 
-export { soundTrack, zap, engine, engine2, warp, click, explosion, mp3 }
+export { crash, soundTrack, zap, engine, engine2, warp, click, explosion, mp3 }

@@ -6,6 +6,8 @@ import * as audio from './audio'
 
 let guid = 1
 const COLLISION_DAMAGE = 20
+const DIFFICULTY_INCREASE_INTERVAL = 15000
+const MAXIMUM_TRAVEL_SPEED = 10000
 
 const useStore = create((set, get) => {
   let spline = new Curves.GrannyKnot()
@@ -78,7 +80,15 @@ const useStore = create((set, get) => {
           const { rocks, immunity } = get()
 
           const time = Date.now()
-          const t = (mutation.t = ((time - mutation.startTime) % mutation.looptime) / mutation.looptime)
+
+          // increase travel speed every (n) seconds overtime with a hard cap at very difficult
+          const timeDiff = time - mutation.startTime
+          const difficultyModifier = Math.min(timeDiff / DIFFICULTY_INCREASE_INTERVAL, 30)
+          const looptime = Math.max((40 - difficultyModifier) * 1000, MAXIMUM_TRAVEL_SPEED)
+          console.log(difficultyModifier, looptime)
+
+          const t = (mutation.t = ((time - mutation.startTime) % looptime) / looptime)
+
           mutation.position = track.parameters.path.getPointAt(t)
           mutation.position.multiplyScalar(mutation.scale)
 
@@ -115,6 +125,8 @@ const useStore = create((set, get) => {
 
           const rockCollisions = r.filter((data) => data.distance < 15)
           if (rockCollisions.length > 0) {
+            playAudio(audio.crash, 1, false)
+
             const updates = rockCollisions.map((data) => ({ time: Date.now(), ...data }))
             set((state) => ({ explosions: [...state.explosions, ...updates] }))
             clearTimeout(cancelExplosionTO)

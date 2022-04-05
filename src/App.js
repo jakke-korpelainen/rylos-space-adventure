@@ -97,6 +97,9 @@ const MenuCredits = () => {
         <p>
           Rocks: <a href="https://sketchfab.com/dzemalmclaren">Dzemal Semanic</a>
         </p>
+        <p>
+          Crash sound created by <a href="https://freesound.org/s/95078/">sandyrb</a>
+        </p>
         <h3>Music</h3>
         <p>
           <a href="https://www.rylosplanet.fi/">Rylos</a>

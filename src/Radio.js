@@ -12,6 +12,7 @@ export const Radio = () => {
   const currentTrack = soundTrack[currentSoundtrackIndex]
 
   useEffect(() => {
+    audioElement.loop = true
     audioElement.play()
     return () => {
       audioElement.pause()
