@@ -1,6 +1,6 @@
-import React, { useMemo, useRef, useEffect } from 'react'
+import React, { useMemo, useEffect } from 'react'
 import styled, { css, createGlobalStyle } from 'styled-components'
-import useStore, { audio } from './store'
+import useStore from './store'
 import { Radio } from './Radio'
 import heartIcon from './images/cardiogram.png'
 import heartbeat from './audio/heartbeat.wav'
