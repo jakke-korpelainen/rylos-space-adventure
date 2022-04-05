@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/rylos-space-adventure/static/css/main.b42222bc.chunk.css",
-    "main.js": "/rylos-space-adventure/static/js/main.7e2a7643.chunk.js",
-    "main.js.map": "/rylos-space-adventure/static/js/main.7e2a7643.chunk.js.map",
+    "main.js": "/rylos-space-adventure/static/js/main.cee0cc04.chunk.js",
+    "main.js.map": "/rylos-space-adventure/static/js/main.cee0cc04.chunk.js.map",
     "runtime-main.js": "/rylos-space-adventure/static/js/runtime-main.dc9b50ea.js",
     "runtime-main.js.map": "/rylos-space-adventure/static/js/runtime-main.dc9b50ea.js.map",
     "static/js/2.e9a29b35.chunk.js": "/rylos-space-adventure/static/js/2.e9a29b35.chunk.js",
@@ -13,6 +13,7 @@
     "static/media/styles.css": "/rylos-space-adventure/static/media/SedgwickAve-Regular.875f9a3b.woff2",
     "static/media/cardiogram.dbd31cd6.png": "/rylos-space-adventure/static/media/cardiogram.dbd31cd6.png",
     "static/media/click.db461987.mp3": "/rylos-space-adventure/static/media/click.db461987.mp3",
+    "static/media/crash.184e27d2.wav": "/rylos-space-adventure/static/media/crash.184e27d2.wav",
     "static/media/earth.45ed3b77.jpg": "/rylos-space-adventure/static/media/earth.45ed3b77.jpg",
     "static/media/engine.75bbe12e.mp3": "/rylos-space-adventure/static/media/engine.75bbe12e.mp3",
     "static/media/engine2.87c3c40a.mp3": "/rylos-space-adventure/static/media/engine2.87c3c40a.mp3",
@@ -41,6 +42,6 @@
     "static/js/runtime-main.dc9b50ea.js",
     "static/js/2.e9a29b35.chunk.js",
     "static/css/main.b42222bc.chunk.css",
-    "static/js/main.7e2a7643.chunk.js"
+    "static/js/main.cee0cc04.chunk.js"
   ]
 }
