@@ -74,7 +74,7 @@ export default function App() {
           </p>
           <h3>Programming</h3>
           <p>
-            <a href="https://github.com/jakke-korpelainen">Jakke Korpelainen</a>
+            <a href="https://jakke.fi">Jakke Korpelainen</a>
           </p>
           <p>
             Based on tremendous work of <a href="https://github.com/drcmda">drcmda</a>
