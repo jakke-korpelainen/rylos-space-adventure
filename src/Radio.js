@@ -3,9 +3,11 @@ import playIcon from './images/play.svg'
 import React from 'react'
 import { soundTrack } from './audio'
 import { useEffect, useState } from 'react'
+import styled from 'styled-components'
 
 export const Radio = () => {
-  const [currentSoundtrackIndex, setCurrentSoundtrackIndex] = useState(0)
+  const initialSongIndex = Math.floor(Math.random() * (soundTrack.length - 1 - 0 + 1) + 0)
+  const [currentSoundtrackIndex, setCurrentSoundtrackIndex] = useState(initialSongIndex)
   const audioElement = useState(new Audio(soundTrack[currentSoundtrackIndex].songSrc))[0]
   const currentTrack = soundTrack[currentSoundtrackIndex]
 
@@ -47,17 +49,17 @@ export const Radio = () => {
   }
 
   return (
-    <div id="radio">
-      <div id="radio-cover">
+    <RadioWrapper>
+      <RadioCover>
         <img src={currentTrack.songCover} />
-      </div>
-      <div id="radio-controls">
-        <div id="top-row">
-          <div id="now-playing">
+      </RadioCover>
+      <RadioControls>
+        <RadioTrack>
+          <RadioTrackDetails>
             <span>{currentTrack ? currentTrack.songName : '- Not playing -'}</span>
-          </div>
-        </div>
-        <div id="radio-actions">
+          </RadioTrackDetails>
+        </RadioTrack>
+        <RadioActions>
           <button>
             <img onClick={prev} src={rewindIcon} />
           </button>
@@ -67,8 +69,84 @@ export const Radio = () => {
           <button>
             <img onClick={next} src={rewindIcon} />
           </button>
-        </div>
-      </div>
-    </div>
+        </RadioActions>
+      </RadioControls>
+    </RadioWrapper>
   )
 }
+
+const RadioWrapper = styled.div`
+  max-width: 300px;
+  min-width: 15vw;
+  background: linear-gradient(#4f0158, #000000);
+  flex-direction: row;
+  display: flex;
+  padding: 10px;
+  width: 100%;
+  overflow: hidden;
+  box-shadow: 55px 25px 25px rgba(0, 0, 0, 0.7);
+  border-radius: 4px;
+
+  @media only screen and (max-width: 900px) {
+    max-width: 100%;
+  }
+`
+
+const RadioCover = styled.div`
+  border: 2px solid orangered;
+  overflow: hidden;
+  height: 90px;
+  width: 90px;
+  margin-right: 1rem;
+  img {
+    height: 100%;
+  }
+`
+const RadioControls = styled.div`
+  flex-grow: 1;
+`
+
+const RadioTrack = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin-bottom: 0.5rem;
+`
+
+const RadioTrackDetails = styled.div`
+  height: 100%;
+  width: 100%;
+  border-radius: 2px;
+  padding: 0.7rem 0.5rem;
+  overflow: hidden;
+  background: black;
+
+  span {
+    color: white;
+    display: inline-block;
+    animation: scroll-left 20s linear infinite;
+  }
+`
+
+const RadioActions = styled.div`
+  button {
+    border-radius: 1rem;
+    pointer-events: all;
+    cursor: pointer;
+    background: transparent;
+    width: 3.5rem;
+    margin-right: 0.5rem;
+    height: 2.5rem;
+    border-color: orangered;
+  }
+
+  button:last-of-type img {
+    width: 100%;
+    transform: scaleX(-1);
+  }
+
+  button img {
+    width: 100%;
+    height: 100%;
+  }
+`

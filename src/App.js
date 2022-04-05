@@ -5,36 +5,15 @@ import Stars from './3d/Stars'
 import Planets from './3d/Planets'
 import Effects from './3d/Effects'
 import Particles from './3d/Particles'
-// import Enemies from './3d/Enemies'
 import Rocks from './3d/Rocks'
 import Explosions from './3d/Explosions'
-// import Rings from './3d/Rings'
 import Track from './3d/Track'
 import Ship from './3d/Ship'
 import Rig from './3d/Rig'
 import Hud from './Hud'
 import useStore, { reset } from './store'
 import rylosLogo from './images/rylos-logo.png'
-import { css } from 'styled-components'
-
-const Menu = (props) => {
-  return (
-    <div id="menu">
-      <div id="menu-content">{props.children}</div>
-    </div>
-  )
-}
-
-export const baseCss = css`
-  font-family: 'Sedgwick Ave', sans-serif;
-  position: absolute;
-  text-transform: uppercase;
-  font-weight: 900;
-  font-variant-numeric: slashed-zero tabular-nums;
-  line-height: 1em;
-  pointer-events: none;
-  color: #9b51e0;
-`
+import styled, { css } from 'styled-components'
 
 export default function App() {
   const menu = useStore((state) => state.menu)
@@ -72,11 +51,9 @@ export default function App() {
           <Explosions />
           <Track />
           <Particles />
-          {/* <Rings /> */}
           <Suspense fallback={null}>
             <Rocks />
             <Planets />
-            {/* <Enemies /> */}
             <Rig>
               <Ship />
             </Rig>
@@ -102,3 +79,57 @@ export default function App() {
     </Menu>
   )
 }
+
+const Menu = (props) => {
+  return (
+    <MenuWrapper>
+      <MenuContent>{props.children}</MenuContent>
+    </MenuWrapper>
+  )
+}
+
+const MenuWrapper = styled.div`
+  background-repeat: no-repeat;
+  background-position: center 10%;
+  background-color: #16161d;
+  display: flex;
+  width: 100%;
+  height: 100%;
+
+  align-items: center;
+  justify-content: center;
+  color: white;
+
+  h1 {
+    font-size: 6rem;
+    font-family: 'Sedgwick Ave';
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    margin-top: 0;
+    text-align: center;
+  }
+
+  @media only screen and (max-width: 900px) {
+    h1 {
+      font-size: 2rem;
+    }
+  }
+`
+
+const MenuContent = styled.div`
+  min-width: 80vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+
+export const baseCss = css`
+  font-family: 'Sedgwick Ave', sans-serif;
+  position: absolute;
+  text-transform: uppercase;
+  font-weight: 900;
+  font-variant-numeric: slashed-zero tabular-nums;
+  line-height: 1em;
+  pointer-events: none;
+  color: #9b51e0;
+`

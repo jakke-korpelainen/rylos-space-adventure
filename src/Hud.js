@@ -13,11 +13,11 @@ export default function Hud() {
   return (
     <>
       <UpperLeft onClick={() => toggle()}>
-        <div id="health-container">
-          <div id="health-value" style={{ backgroundColor: immunity ? 'blue' : 'green', width: `${immunity ? 100 : health}%` }}>
+        <HealthContainer>
+          <HealthValue style={{ backgroundColor: immunity ? 'blue' : 'green', width: `${immunity ? 100 : health}%` }}>
             {immunity ? `Shield` : `${health}%`}
-          </div>
-        </div>
+          </HealthValue>
+        </HealthContainer>
       </UpperLeft>
       <UpperRight>
         <a target="_blank" href="https://www.rylosplanet.fi/">
@@ -44,6 +44,24 @@ const base = css`
   line-height: 1em;
   pointer-events: none;
   color: #9b51e0;
+`
+
+const HealthContainer = styled.div`
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  background: #333;
+  min-width: 10vw;
+  margin-top: 1rem;
+  padding: 0.5rem;
+  max-width: 150px;
+`
+
+const HealthValue = styled.div`
+  font-size: 1.5rem;
+  padding: 0.5rem 0.5rem;
+  background: green;
+  color: white;
 `
 
 const UpperLeft = styled.div`

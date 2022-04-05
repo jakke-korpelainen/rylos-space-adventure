@@ -28,133 +28,13 @@ body {
   font-family: 'Cantarell';
 }
 
-#menu {
-  background-repeat: no-repeat;
-  background-position: center 10%;
-  background-color: #16161d;
-  display: flex;
-  width: 100%;
-  height: 100%;
-
-  align-items: center;
-  justify-content: center;
-  color: white;
-}
-
-#menu h1 {
-  font-size: 6rem;
-  font-family: 'Sedgwick Ave';
-  text-transform: uppercase;
-  margin-bottom: 2rem;
-  margin-top: 0;
-  text-align: center;
-}
+#menu 
 
 #menu img {
   max-width: 100%;
 }
 
-@media only screen and (max-width: 900px) {
-  #menu h1 {
-    font-size: 2rem;
-  }
-}
 
-#radio {
-  max-width: 300px;
-  min-width: 15vw;
-  background: linear-gradient(#4f0158, #000000);
-  flex-direction: row;
-  display: flex;
-  padding: 10px;
-  width: 100%;
-  overflow: hidden;
-  box-shadow: 55px 25px 25px rgba(0, 0, 0, .7);
-  border-radius: 4px;
-}
-
-#radio-cover {
-  border: 2px solid orangered;
-  overflow: hidden;
-  height: 90px;
-  width: 90px;
-  margin-right: 1rem;
-}
-
-#radio-cover img {
-  height: 100%;
-}
-
-#radio-controls {
-  flex-grow: 1;
-}
-
-@media only screen and (max-width: 900px) {
-  #radio {
-    max-width: 100%;
-  }
-}
-
-#top-row {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  margin-bottom: 0.5rem;
-}
-
-#now-playing {
-  height: 100%;
-  width: 100%;
-  border-radius: 2px;
-  padding: 0.7rem 0.5rem;
-  overflow: hidden;
-  background: black;
-}
-
-#now-playing span {
-  color: white;
-  display: inline-block;
-  animation: scroll-left 20s linear infinite;
-}
-
-#radio-actions button {
-  border-radius: 1rem;
-  pointer-events: all;
-  cursor: pointer;
-  background: transparent;
-  width: 3.5rem;
-  margin-right: 0.5rem;
-  height: 2.5rem;
-  border-color: orangered;
-}
-
-#radio-actions button:last-of-type img {
-  width: 100%;
-  transform: scaleX(-1);
-}
-
-#radio-actions button img {
-  width: 100%;
-  height: 100%;
-}
-
-#health-container {
-  border-radius: 0.5rem;
-  display: flex;
-  flex-direction: column;
-  background: #333;
-  min-width: 10vw;
-  margin-top: 1rem;
-  padding: 0.5rem;
-  max-width: 150px;
-}
-
-#health-value {
-  font-size: 1.5rem;
-  padding: 0.5rem 0.5rem;
-  background: green;
-  color: white;
-}
 
 @keyframes scroll-left {
   0% {
@@ -170,10 +50,7 @@ body {
 }
 
 #menu-content {
-  min-width: 80vw;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+
 }
 
 #menu-action {
