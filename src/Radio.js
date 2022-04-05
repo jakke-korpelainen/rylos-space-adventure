@@ -13,6 +13,11 @@ export const Radio = () => {
 
   useEffect(() => {
     audioElement.play()
+    return () => {
+      audioElement.pause()
+      audioElement.removeAttribute('src')
+      audioElement.load()
+    }
   }, [])
 
   useEffect(() => {

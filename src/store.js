@@ -5,7 +5,7 @@ import create from 'zustand'
 import * as audio from './audio'
 
 let guid = 1
-const COLLISION_DAMAGE = 10
+const COLLISION_DAMAGE = 25
 
 const useStore = create((set, get) => {
   let spline = new Curves.GrannyKnot()
