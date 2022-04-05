@@ -24,9 +24,7 @@ export default function App() {
     return (
       <Menu>
         <h1>Game Over</h1>
-        <button id="menu-action" onClick={reset}>
-          Restart
-        </button>
+        <MenuAction onClick={reset}>Restart</MenuAction>
       </Menu>
     )
   }
@@ -65,17 +63,51 @@ export default function App() {
     )
   }
 
+  if (menu === 'credits') {
+    return (
+      <Menu>
+        <MenuAction onClick={() => actions.menu()}>Back</MenuAction>
+        <Credits>
+          <h2>Credits</h2>
+          <h3>Programming</h3>
+          <p>
+            <a href="https://github.com/jakke-korpelainen">Jakke Korpelainen</a>
+          </p>
+          <p>
+            Based on tremendous work of <a href="https://github.com/drcmda">drcmda</a>
+          </p>
+          <h3>Assets</h3>
+          <p>
+            Ship: <a href="https://sketchfab.com/themuffincoder">TheMuffinCoder</a>
+          </p>
+          <p>
+            Rocks: <a href="https://sketchfab.com/dzemalmclaren">Dzemal Semanic</a>
+          </p>
+          <h3>Music</h3>
+          <p>
+            <a href="https://www.rylosplanet.fi/">Rylos</a>
+          </p>
+        </Credits>
+      </Menu>
+    )
+  }
+
   return (
     <Menu>
       <img src={rylosLogo} />
       <h1>Space Adventure</h1>
-      <button
+      <MenuAction
         onClick={() => {
           actions.start()
-        }}
-        id="menu-action">
+        }}>
         Play
-      </button>
+      </MenuAction>
+      <MenuAction
+        onClick={() => {
+          actions.credits()
+        }}>
+        Credits
+      </MenuAction>
     </Menu>
   )
 }
@@ -87,6 +119,29 @@ const Menu = (props) => {
     </MenuWrapper>
   )
 }
+
+const MenuAction = styled.button`
+  border: 3px solid orangered;
+  pointer-events: all;
+  background: linear-gradient(#4f0158, #000000);
+  cursor: pointer;
+  color: white;
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 3rem;
+  font-family: 'Sedgwick Ave';
+  min-width: 300px;
+  padding: 0 2rem;
+`
+
+const Credits = styled.div`
+  width: 100%;
+  margin-top: 2rem;
+
+  a {
+    color: white;
+  }
+`
 
 const MenuWrapper = styled.div`
   background-repeat: no-repeat;

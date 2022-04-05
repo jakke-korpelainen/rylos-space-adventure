@@ -49,21 +49,8 @@ body {
   }
 }
 
-#menu-content {
-
-}
-
 #menu-action {
-  border: 3px solid orangered;
-  pointer-events: all;
-  background: linear-gradient(#4f0158, #000000);
-  cursor: pointer;
-  color: white;
-  font-weight: 900;
-  text-transform: uppercase;
-  font-size: 3rem;
-  font-family: 'Sedgwick Ave';
-  min-width: 200px;
+
 }
 
 @media only screen and (max-width: 900px) {

@@ -49,8 +49,14 @@ const useStore = create((set, get) => {
     },
 
     actions: {
+      menu() {
+        set({ menu: null })
+      },
       start() {
         set({ menu: 'game' })
+      },
+      credits() {
+        set({ menu: 'credits' })
       },
       init(camera) {
         const { mutation, actions } = get()
