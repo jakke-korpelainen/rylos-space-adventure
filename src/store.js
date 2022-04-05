@@ -24,7 +24,6 @@ const useStore = create((set, get) => {
     lasers: [],
     explosions: [],
     rocks: randomData(100, track, 150, 8, () => 1 + Math.random() * 2.5),
-    enemies: randomData(10, track, 20, 15, 1),
     immunity: true,
 
     mutation: {
@@ -36,7 +35,6 @@ const useStore = create((set, get) => {
       scale: 15,
       fov: 70,
       hits: false,
-      rings: randomRings(30, track),
       particles: randomData(1500, track, 100, 1, () => 0.5 + Math.random() * 0.8),
       looptime: 40 * 1000,
       binormal: new THREE.Vector3(),
@@ -77,7 +75,7 @@ const useStore = create((set, get) => {
         })
 
         addEffect(() => {
-          const { rocks, enemies, immunity } = get()
+          const { rocks, immunity } = get()
 
           const time = Date.now()
           const t = (mutation.t = ((time - mutation.startTime) % mutation.looptime) / mutation.looptime)
@@ -95,33 +93,38 @@ const useStore = create((set, get) => {
 
           // test for hits
           const r = rocks.filter(actions.test)
-          const e = enemies.filter(actions.test)
-          const a = r.concat(e)
+
           const previous = mutation.hits
-          mutation.hits = a.length
+          mutation.hits = r.length
           if (previous === 0 && mutation.hits) playAudio(audio.click)
           const lasers = get().lasers
           if (mutation.hits && lasers.length && time - lasers[lasers.length - 1] < 100) {
-            const updates = a.map((data) => ({ time: Date.now(), ...data }))
+            const updates = r.map((data) => ({ time: Date.now(), ...data }))
             set((state) => ({ explosions: [...state.explosions, ...updates] }))
             clearTimeout(cancelExplosionTO)
             cancelExplosionTO = setTimeout(() => set((state) => ({ explosions: state.explosions.filter(({ time }) => Date.now() - time <= 1000) })), 1000)
+
+            // replace shot rocks with new ones
+            const newRocks = randomData(mutation.hits, track, 150, 8, () => 1 + Math.random() * 2.5)
+
             set((state) => ({
-              points: state.points + r.length * 100 + e.length * 200,
-              rocks: state.rocks.filter((rock) => !r.find((r) => r.guid === rock.guid)),
-              enemies: state.enemies.filter((enemy) => !e.find((e) => e.guid === enemy.guid))
+              points: state.points + r.length * 100,
+              rocks: [...newRocks, ...state.rocks.filter((rock) => !r.find((r) => r.guid === rock.guid))]
             }))
           }
 
           const rockCollisions = r.filter((data) => data.distance < 15)
-
           if (rockCollisions.length > 0) {
             const updates = rockCollisions.map((data) => ({ time: Date.now(), ...data }))
             set((state) => ({ explosions: [...state.explosions, ...updates] }))
             clearTimeout(cancelExplosionTO)
             cancelExplosionTO = setTimeout(() => set((state) => ({ explosions: state.explosions.filter(({ time }) => Date.now() - time <= 1000) })), 1000)
+
+            // replace collided rocks with new ones
+            const newRocks = randomData(mutation.hits, track, 150, 8, () => 1 + Math.random() * 2.5)
+
             set((state) => ({
-              rocks: state.rocks.filter((rock) => !rockCollisions.find((r) => r.guid === rock.guid))
+              rocks: [...newRocks, ...state.rocks.filter((rock) => !rockCollisions.find((r) => r.guid === rock.guid))]
             }))
 
             if (immunity === false) {
@@ -168,23 +171,6 @@ function randomData(count, track, radius, size, scale) {
     const speed = 0.1 + Math.random()
     return { guid: guid++, scale: typeof scale === 'function' ? scale() : scale, size, offset, pos, speed, radius, t, hit: new THREE.Vector3(), distance: 1000 }
   })
-}
-
-function randomRings(count, track) {
-  let temp = []
-  let t = 0.4
-  for (let i = 0; i < count; i++) {
-    t += 0.003
-    const pos = track.parameters.path.getPointAt(t)
-    pos.multiplyScalar(15)
-    const segments = track.tangents.length
-    const pickt = t * segments
-    const pick = Math.floor(pickt)
-    const lookAt = track.parameters.path.getPointAt((t + 1 / track.parameters.path.getLength()) % 1).multiplyScalar(15)
-    const matrix = new THREE.Matrix4().lookAt(pos, lookAt, track.binormals[pick])
-    temp.push([pos.toArray(), matrix])
-  }
-  return temp
 }
 
 function reset() {
