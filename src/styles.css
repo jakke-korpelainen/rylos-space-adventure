@@ -28,33 +28,41 @@ body {
   font-family: 'Cantarell';
 }
 
-#menu 
-
-#menu img {
-  max-width: 100%;
+h1,h2,h3,h4,h5,h6 {
+  font-family: 'Sedgwick Ave';
 }
 
-
+.pulse {
+  transform: scale(1);
+	animation: pulse 0.4s infinite;
+}
 
 @keyframes scroll-left {
   0% {
-      -moz-transform: translateX(100%);
-      -webkit-transform: translateX(100%);
-      transform: translateX(100%);
+      -moz-transform: translateX(200%);
+      -webkit-transform: translateX(200%);
+      transform: translateX(200%);
   }
   100% {
-      -moz-transform: translateX(-100%);
-      -webkit-transform: translateX(-100%);
-      transform: translateX(-100%);
+      -moz-transform: translateX(-200%);
+      -webkit-transform: translateX(-200%);
+      transform: translateX(-200%);
   }
 }
 
-#menu-action {
+@keyframes pulse {
+	0% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+	}
 
-}
+	70% {
+		transform: scale(1);
+		box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+	}
 
-@media only screen and (max-width: 900px) {
-  #menu-action {
-    font-size: 2rem;
-  }
+	100% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+	}
 }

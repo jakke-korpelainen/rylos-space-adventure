@@ -5,10 +5,11 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import useStore from '../store'
 
 const geometry = new THREE.BoxBufferGeometry(1, 1, 40)
-const lightgreen = new THREE.Color('lightgreen')
-const hotpink = new THREE.Color('hotpink')
-const laserMaterial = new THREE.MeshBasicMaterial({ color: lightgreen })
-const crossMaterial = new THREE.MeshBasicMaterial({ color: hotpink, fog: false })
+const red = new THREE.Color('red')
+const orangered = new THREE.Color('orangered')
+const ambientYellowLight = new THREE.Color('#FFF293')
+const laserMaterial = new THREE.MeshBasicMaterial({ color: orangered })
+const crossMaterial = new THREE.MeshBasicMaterial({ color: orangered, fog: false })
 const position = new THREE.Vector3()
 const direction = new THREE.Vector3()
 
@@ -47,9 +48,8 @@ export default function Ship() {
     ray.origin.copy(position)
     ray.direction.copy(direction.negate())
 
-    // ...
-    crossMaterial.color = mutation.hits ? lightgreen : hotpink
-    cross.current.visible = !mutation.hits
+    crossMaterial.color = mutation.hits ? red : orangered
+    // cross.current.visible = true // !mutation.hits
     target.current.visible = !!mutation.hits
   })
 
@@ -78,7 +78,7 @@ export default function Ship() {
             <boxGeometry args={[2, 40, 2]} />
           </mesh>
         </group>
-        <pointLight ref={laserLight} position={[0, 0, -20]} distance={100} intensity={0} color="lightgreen" />
+        <pointLight ref={laserLight} position={[0, 0, -20]} distance={100} intensity={0} color={ambientYellowLight} />
         <group ref={laserGroup}>
           {lasers.map((t, i) => (
             <group key={i}>

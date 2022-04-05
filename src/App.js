@@ -87,6 +87,11 @@ const MenuCredits = () => {
         </p>
         <h3>Assets</h3>
         <p>
+          <a href="https://www.flaticon.com/free-icons/heart" title="heart icons">
+            Heart icons created by Freepik - Flaticon
+          </a>
+        </p>
+        <p>
           Ship: <a href="https://sketchfab.com/themuffincoder">TheMuffinCoder</a>
         </p>
         <p>
