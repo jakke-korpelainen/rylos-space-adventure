@@ -69,6 +69,9 @@ export default function App() {
         <MenuAction onClick={() => actions.menu()}>Back</MenuAction>
         <Credits>
           <h2>Credits</h2>
+          <p>
+            <a href="https://github.com/jakke-korpelainen/rylos-space-adventure">Source code</a>
+          </p>
           <h3>Programming</h3>
           <p>
             <a href="https://github.com/jakke-korpelainen">Jakke Korpelainen</a>
