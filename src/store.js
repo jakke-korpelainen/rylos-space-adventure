@@ -5,6 +5,7 @@ import create from 'zustand'
 import * as audio from './audio'
 
 let guid = 1
+const COLLISION_DAMAGE = 5
 
 const useStore = create((set, get) => {
   let spline = new Curves.GrannyKnot()
@@ -123,7 +124,7 @@ const useStore = create((set, get) => {
             }))
 
             if (immunity === false) {
-              set((state) => ({ health: Math.max(0, state.health - 5) }))
+              set((state) => ({ health: Math.max(0, state.health - COLLISION_DAMAGE) }))
             }
           }
 

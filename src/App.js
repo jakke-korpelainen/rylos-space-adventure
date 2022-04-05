@@ -96,6 +96,10 @@ export default function App() {
     <Menu>
       <img src={rylosLogo} />
       <h1>Space Adventure</h1>
+      <p>
+        Humankind has been dumping trash in to the space for ages. Now the trash are returning to the earth. Only Ned the Carrot and his loyal spaceship can
+        stop the earth from being trashed.
+      </p>
       <MenuAction
         onClick={() => {
           actions.start()
@@ -132,6 +136,11 @@ const MenuAction = styled.button`
   font-family: 'Sedgwick Ave';
   min-width: 300px;
   padding: 0 2rem;
+  margin-top: 1rem;
+
+  @media only screen and (max-width: 900px) {
+    font-size: 2rem;
+  }
 `
 
 const Credits = styled.div`
@@ -150,7 +159,6 @@ const MenuWrapper = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
-
   align-items: center;
   justify-content: center;
   color: white;
@@ -159,23 +167,40 @@ const MenuWrapper = styled.div`
     font-size: 6rem;
     font-family: 'Sedgwick Ave';
     text-transform: uppercase;
-    margin-bottom: 2rem;
+    margin-bottom: 0;
     margin-top: 0;
     text-align: center;
   }
 
+  h1 + p {
+    font-size: 2rem;
+    width: 1200px;
+    max-width: 100%;
+    text-align: center;
+    margin-bottom: 5rem;
+    margin-top: 0;
+  }
+
   @media only screen and (max-width: 900px) {
     h1 {
-      font-size: 2rem;
+      font-size: 2.5rem;
+    }
+    h1 + p {
+      font-size: 1.2rem;
     }
   }
 `
 
 const MenuContent = styled.div`
+  height: 100%;
   min-width: 80vw;
+  max-width: 90vw;
   display: flex;
   flex-direction: column;
   align-items: center;
+  img {
+    max-width: 100%;
+  }
 `
 
 export const baseCss = css`
