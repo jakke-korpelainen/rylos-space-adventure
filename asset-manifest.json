@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/rylos-space-adventure/static/css/main.2552cd5f.chunk.css",
-    "main.js": "/rylos-space-adventure/static/js/main.a71d8375.chunk.js",
-    "main.js.map": "/rylos-space-adventure/static/js/main.a71d8375.chunk.js.map",
+    "main.css": "/rylos-space-adventure/static/css/main.229956e5.chunk.css",
+    "main.js": "/rylos-space-adventure/static/js/main.ec2e82c9.chunk.js",
+    "main.js.map": "/rylos-space-adventure/static/js/main.ec2e82c9.chunk.js.map",
     "runtime-main.js": "/rylos-space-adventure/static/js/runtime-main.dc9b50ea.js",
     "runtime-main.js.map": "/rylos-space-adventure/static/js/runtime-main.dc9b50ea.js.map",
     "static/js/2.3618aa14.chunk.js": "/rylos-space-adventure/static/js/2.3618aa14.chunk.js",
     "static/js/2.3618aa14.chunk.js.map": "/rylos-space-adventure/static/js/2.3618aa14.chunk.js.map",
     "index.html": "/rylos-space-adventure/index.html",
-    "static/css/main.2552cd5f.chunk.css.map": "/rylos-space-adventure/static/css/main.2552cd5f.chunk.css.map",
+    "static/css/main.229956e5.chunk.css.map": "/rylos-space-adventure/static/css/main.229956e5.chunk.css.map",
     "static/js/2.3618aa14.chunk.js.LICENSE.txt": "/rylos-space-adventure/static/js/2.3618aa14.chunk.js.LICENSE.txt",
     "static/media/styles.css": "/rylos-space-adventure/static/media/SedgwickAve-Regular.875f9a3b.woff2",
     "static/media/click.db461987.mp3": "/rylos-space-adventure/static/media/click.db461987.mp3",
@@ -20,21 +20,23 @@
     "static/media/moon.27019542.png": "/rylos-space-adventure/static/media/moon.27019542.png",
     "static/media/play.496c51e4.svg": "/rylos-space-adventure/static/media/play.496c51e4.svg",
     "static/media/rewind.4cd5b907.svg": "/rylos-space-adventure/static/media/rewind.4cd5b907.svg",
-    "static/media/rylos-climate.64e4640e.wav": "/rylos-space-adventure/static/media/rylos-climate.64e4640e.wav",
+    "static/media/rylos-black-liquid.130be6d9.mp3": "/rylos-space-adventure/static/media/rylos-black-liquid.130be6d9.mp3",
+    "static/media/rylos-black-liquid.c5d1d0a2.jpg": "/rylos-space-adventure/static/media/rylos-black-liquid.c5d1d0a2.jpg",
+    "static/media/rylos-climate.c3742818.mp3": "/rylos-space-adventure/static/media/rylos-climate.c3742818.mp3",
     "static/media/rylos-climate.f7a8098a.jpg": "/rylos-space-adventure/static/media/rylos-climate.f7a8098a.jpg",
+    "static/media/rylos-freak-lust.a13462cf.mp3": "/rylos-space-adventure/static/media/rylos-freak-lust.a13462cf.mp3",
     "static/media/rylos-freak-lust.d42472e3.png": "/rylos-space-adventure/static/media/rylos-freak-lust.d42472e3.png",
-    "static/media/rylos-freak-lust.d76d5f45.wav": "/rylos-space-adventure/static/media/rylos-freak-lust.d76d5f45.wav",
     "static/media/rylos-logo.46173d62.png": "/rylos-space-adventure/static/media/rylos-logo.46173d62.png",
-    "static/media/rylos-misunderstood.7b35538c.wav": "/rylos-space-adventure/static/media/rylos-misunderstood.7b35538c.wav",
+    "static/media/rylos-misunderstood.2afd4c11.mp3": "/rylos-space-adventure/static/media/rylos-misunderstood.2afd4c11.mp3",
     "static/media/rylos-misunderstood.d13d9c2d.jpg": "/rylos-space-adventure/static/media/rylos-misunderstood.d13d9c2d.jpg",
+    "static/media/rylos-road.138ea8a0.mp3": "/rylos-space-adventure/static/media/rylos-road.138ea8a0.mp3",
     "static/media/rylos-road.86b24c20.png": "/rylos-space-adventure/static/media/rylos-road.86b24c20.png",
-    "static/media/rylos-road.982dbc79.wav": "/rylos-space-adventure/static/media/rylos-road.982dbc79.wav",
     "static/media/warp.1f9bec85.mp3": "/rylos-space-adventure/static/media/warp.1f9bec85.mp3"
   },
   "entrypoints": [
     "static/js/runtime-main.dc9b50ea.js",
     "static/js/2.3618aa14.chunk.js",
-    "static/css/main.2552cd5f.chunk.css",
-    "static/js/main.a71d8375.chunk.js"
+    "static/css/main.229956e5.chunk.css",
+    "static/js/main.ec2e82c9.chunk.js"
   ]
 }
