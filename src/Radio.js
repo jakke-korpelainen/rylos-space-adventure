@@ -34,21 +34,26 @@ export const Radio = () => {
 
   return (
     <div id="radio">
-      <div id="top-row">
-        <div id="now-playing">
-          <span>{currentTrack ? currentTrack.songName : '- Not playing -'}</span>
-        </div>
+      <div id="radio-cover">
+        <img src={currentTrack.songCover} />
       </div>
-      <div id="radio-actions">
-        <button>
-          <img onClick={prev} src={rewindIcon} />
-        </button>
-        <button onClick={toggle}>
-          <img src={playIcon} />
-        </button>
-        <button>
-          <img onClick={next} src={rewindIcon} />
-        </button>
+      <div id="radio-controls">
+        <div id="top-row">
+          <div id="now-playing">
+            <span>{currentTrack ? currentTrack.songName : '- Not playing -'}</span>
+          </div>
+        </div>
+        <div id="radio-actions">
+          <button>
+            <img onClick={prev} src={rewindIcon} />
+          </button>
+          <button onClick={toggle}>
+            <img src={playIcon} />
+          </button>
+          <button>
+            <img onClick={next} src={rewindIcon} />
+          </button>
+        </div>
       </div>
     </div>
   )

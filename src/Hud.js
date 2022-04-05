@@ -16,7 +16,7 @@ export default function Hud() {
       <UpperLeft onClick={() => toggle()}>
         <div id="health-container">
           <div id="health-value" style={{ backgroundColor: immunity ? 'blue' : 'green', width: `${immunity ? 100 : health}%` }}>
-            {immunity ? `Shield` : `HP ${health}%`}
+            {immunity ? `Shield` : `${health}%`}
           </div>
         </div>
       </UpperLeft>
@@ -56,6 +56,9 @@ const UpperLeft = styled.div`
   pointer-events: all;
   cursor: pointer;
   @media only screen and (max-width: 900px) {
+    left: 20px;
+    top: 20px;
+    transform: none;
     font-size: 1.5em;
   }
 `
@@ -95,12 +98,12 @@ const LowerLeft = styled.div`
     line-height: 1em;
   }
   @media only screen and (max-width: 900px) {
-    bottom: 30px;
+    bottom: 150px;
     & > h1 {
-      font-size: 6em !important;
+      font-size: 3em !important;
     }
     & > h2 {
-      font-size: 3em !important;
+      font-size: 1.5em !important;
     }
   }
 `
@@ -110,12 +113,12 @@ const LowerRight = styled.div`
   bottom: 50px;
   right: 50px;
   transform: skew(5deg, 5deg);
-  background: black;
 
   @media only screen and (max-width: 900px) {
-    bottom: 50px;
-    height: 40px;
-    width: 150px;
+    transform: none;
+    bottom: 0;
+    right: 0;
+    width: 100%;
   }
 `
 

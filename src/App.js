@@ -19,7 +19,7 @@ import { css } from 'styled-components'
 
 const Menu = (props) => {
   return (
-    <div id="menu" style={{ backgroundImage: `url(${rylosLogo})` }}>
+    <div id="menu">
       <div id="menu-content">{props.children}</div>
     </div>
   )
@@ -90,12 +90,14 @@ export default function App() {
 
   return (
     <Menu>
+      <img src={rylosLogo} />
+      <h1>Space Adventure</h1>
       <button
         onClick={() => {
           actions.start()
         }}
         id="menu-action">
-        Start Game
+        Play
       </button>
     </Menu>
   )
