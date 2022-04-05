@@ -13,7 +13,7 @@ export default function Hud() {
   const toggle = useStore((state) => state.actions.toggleSound)
   const score = useMemo(() => (points >= 1000 ? (points / 1000).toFixed(1) + 'K' : points), [points])
 
-  const lowHealth = health <= 30
+  const lowHealth = health < 50
   const healthColor = lowHealth ? 'red' : 'green'
 
   useEffect(() => {
