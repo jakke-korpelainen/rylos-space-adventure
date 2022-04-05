@@ -1,2 +1,3 @@
-# rylos-solarworks
-Created with CodeSandbox
+#rylos space adventure
+
+Based on tremendous work by Paul Henschel
