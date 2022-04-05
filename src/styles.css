@@ -83,12 +83,6 @@ background-position: center 10%;
   animation: scroll-left 20s linear infinite;
 }
 
-#casette-slot {
-  display: flex;
-  flex-grow: 1;
-  background-size: contain;
-}
-
 #radio-actions button {
   border-radius: 1rem;
   pointer-events: all;

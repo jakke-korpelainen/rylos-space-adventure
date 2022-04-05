@@ -1,4 +1,3 @@
-import cassetteSlot from './images/slot.png'
 import rewindIcon from './images/rewind.svg'
 import playIcon from './images/play.svg'
 import React from 'react'
@@ -39,7 +38,6 @@ export const Radio = () => {
         <div id="now-playing">
           <span>{currentTrack ? currentTrack.songName : '- Not playing -'}</span>
         </div>
-        <div id="casette-slot" style={{ backgroundImage: `url(${cassetteSlot})` }}></div>
       </div>
       <div id="radio-actions">
         <button>
