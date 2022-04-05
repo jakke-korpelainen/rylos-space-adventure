@@ -89,7 +89,7 @@ const RadioWrapper = styled.div`
   padding: 10px;
   width: 100%;
   overflow: hidden;
-  box-shadow: 55px 25px 25px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 15px 15px rgba(0, 0, 0, 0.7);
   border-radius: 4px;
 
   @media only screen and (max-width: 900px) {
