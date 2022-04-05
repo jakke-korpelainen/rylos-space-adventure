@@ -36,7 +36,7 @@ export default function Rig({ children }) {
 
   return (
     <group ref={group}>
-      <pointLight distance={400} position={[0, 100, -420]} intensity={5} color="indianred" />
+      <pointLight distance={400} position={[0, 100, -420]} intensity={5} color="#9b51e0" />
       <group ref={rig} position={[0, 0, -50]}>
         {children}
       </group>

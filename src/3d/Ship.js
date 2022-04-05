@@ -33,6 +33,8 @@ export default function Ship() {
     main.current.position.y += (25 + -mouse.y / 10 - main.current.position.y) * 0.2
     exhaust.current.scale.x = 1 + Math.sin(clock.getElapsedTime() * 200)
     exhaust.current.scale.y = 1 + Math.sin(clock.getElapsedTime() * 200)
+    exhaust.current.scale.x = 0.01
+    exhaust.current.scale.y = 0.01
     for (let i = 0; i < lasers.length; i++) {
       const group = laserGroup.current.children[i]
       group.position.z -= 20
@@ -106,10 +108,11 @@ export default function Ship() {
           </mesh>
         </group>
       </group>
-      <mesh ref={exhaust} scale={[1, 1, 30]} position={[0, 1, 30]}>
-        <dodecahedronBufferGeometry args={[1.5, 0]} />
-        <meshBasicMaterial color="lightblue" />
-      </mesh>
+      <pointLight ref={exhaust} position={[0, 1, 30]} distance={100} intensity={2.5} color="white" />
+      {/* <mesh ref={exhaust} scale={[1, 1, 30]} position={[0, 1, 30]}>
+        <dodecahedronBufferGeometry opacity={0} args={[1.5, 0]} />
+        <meshBasicMaterial opacity={0} color="lightblue" />
+      </mesh> */}
     </group>
   )
 }

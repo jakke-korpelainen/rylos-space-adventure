@@ -14,7 +14,8 @@ const useStore = create((set, get) => {
   const box = new THREE.Box3()
 
   return {
-    sound: false,
+    currentTrackIndex: 0,
+    menu: undefined,
     camera: undefined,
     points: 0,
     health: 100,
@@ -22,6 +23,7 @@ const useStore = create((set, get) => {
     explosions: [],
     rocks: randomData(100, track, 150, 8, () => 1 + Math.random() * 2.5),
     enemies: randomData(10, track, 20, 15, 1),
+    immunity: true,
 
     mutation: {
       t: 0,
@@ -47,15 +49,27 @@ const useStore = create((set, get) => {
     },
 
     actions: {
+      start() {
+        set({ menu: 'game' })
+      },
       init(camera) {
         const { mutation, actions } = get()
 
         set({ camera })
         mutation.clock.start()
-        actions.toggleSound(get().sound)
+
+        playAudio(audio.engine, 1, true)
+        playAudio(audio.engine2, 0.3, true)
 
         addEffect(() => {
-          const { rocks, enemies } = get()
+          const { immunity } = get()
+          if (immunity) {
+            setTimeout(() => set({ immunity: false }), 5000)
+          }
+        })
+
+        addEffect(() => {
+          const { rocks, enemies, immunity } = get()
 
           const time = Date.now()
           const t = (mutation.t = ((time - mutation.startTime) % mutation.looptime) / mutation.looptime)
@@ -90,7 +104,26 @@ const useStore = create((set, get) => {
               enemies: state.enemies.filter((enemy) => !e.find((e) => e.guid === enemy.guid))
             }))
           }
-          //if (a.some(data => data.distance < 15)) set(state => ({ health: state.health - 1 }))
+
+          const rockCollisions = r.filter((data) => data.distance < 15)
+
+          if (rockCollisions.length > 0) {
+            const updates = rockCollisions.map((data) => ({ time: Date.now(), ...data }))
+            set((state) => ({ explosions: [...state.explosions, ...updates] }))
+            clearTimeout(cancelExplosionTO)
+            cancelExplosionTO = setTimeout(() => set((state) => ({ explosions: state.explosions.filter(({ time }) => Date.now() - time <= 1000) })), 1000)
+            set((state) => ({
+              rocks: state.rocks.filter((rock) => !rockCollisions.find((r) => r.guid === rock.guid))
+            }))
+
+            if (immunity === false) {
+              set((state) => ({ health: Math.max(0, state.health - 5) }))
+            }
+          }
+
+          if (get().health === 0) {
+            set(() => ({ menu: 'dead' }))
+          }
         })
       },
       shoot() {
@@ -98,12 +131,6 @@ const useStore = create((set, get) => {
         clearTimeout(cancelLaserTO)
         cancelLaserTO = setTimeout(() => set((state) => ({ lasers: state.lasers.filter((t) => Date.now() - t <= 1000) })), 1000)
         playAudio(audio.zap, 0.5)
-      },
-      toggleSound(sound = !get().sound) {
-        set({ sound })
-        playAudio(audio.engine, 1, true)
-        playAudio(audio.engine2, 0.3, true)
-        playAudio(audio.bg, 1, true)
       },
       updateMouse({ clientX: x, clientY: y }) {
         get().mutation.mouse.set(x - window.innerWidth / 2, y - window.innerHeight / 2)
@@ -151,14 +178,16 @@ function randomRings(count, track) {
   return temp
 }
 
+function reset() {
+  useStore.setState({ menu: 'game', health: 100 })
+}
+
 function playAudio(audio, volume = 1, loop = false) {
-  if (useStore.getState().sound) {
-    audio.currentTime = 0
-    audio.volume = volume
-    audio.loop = loop
-    audio.play()
-  } else audio.pause()
+  audio.currentTime = 0
+  audio.volume = volume
+  audio.loop = loop
+  audio.play()
 }
 
 export default useStore
-export { audio, playAudio }
+export { audio, playAudio, reset }

@@ -30,15 +30,17 @@ function Explosion({ position, scale }) {
 
   useFrame(() => {
     particles.forEach(({ data }, type) => {
-      const mesh = group.current.children[type]
-      data.forEach(([vec, normal], i) => {
-        vec.add(normal)
-        dummy.position.copy(vec)
-        dummy.updateMatrix()
-        mesh.setMatrixAt(i, dummy.matrix)
-      })
-      mesh.material.opacity -= 0.025
-      mesh.instanceMatrix.needsUpdate = true
+      try {
+        const mesh = group.current.children[type]
+        data.forEach(([vec, normal], i) => {
+          vec.add(normal)
+          dummy.position.copy(vec)
+          dummy.updateMatrix()
+          mesh.setMatrixAt(i, dummy.matrix)
+        })
+        mesh.material.opacity -= 0.025
+        mesh.instanceMatrix.needsUpdate = true
+      } catch (err) {}
     })
   })
 

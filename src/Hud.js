@@ -1,56 +1,50 @@
 import React, { useMemo, useRef, useEffect } from 'react'
 import styled, { css, createGlobalStyle } from 'styled-components'
 import useStore from './store'
+import { Radio } from './Radio'
 
 export default function Hud() {
   const points = useStore((state) => state.points)
+  const immunity = useStore((state) => state.immunity)
   const health = useStore((state) => state.health)
   const sound = useStore((state) => state.sound)
   const toggle = useStore((state) => state.actions.toggleSound)
-
-  const seconds = useRef()
-  useEffect(() => {
-    const t = Date.now()
-    const i = setInterval(() => (seconds.current.innerText = ((Date.now() - t) / 1000).toFixed(1)), 100)
-    return () => clearInterval(i)
-  }, [])
-
   const score = useMemo(() => (points >= 1000 ? (points / 1000).toFixed(1) + 'K' : points), [points])
+
   return (
     <>
       <UpperLeft onClick={() => toggle()}>
-        sound
-        <br />
-        {sound ? 'off' : 'on'}
+        <div id="health-container">
+          <div id="health-value" style={{ backgroundColor: immunity ? 'blue' : 'green', width: `${immunity ? 100 : health}%` }}>
+            {immunity ? `Shield` : `HP ${health}%`}
+          </div>
+        </div>
       </UpperLeft>
       <UpperRight>
-        <a href="https://codesandbox.io/s/react-three-fiber-untitled-game-4pp5r">source</a>
-        <br />
-        <a href="https://twitter.com/0xca0a">twitter</a>
-        <br />
-        <a href="https://github.com/react-spring/react-three-fiber">github</a>
+        <a target="_blank" href="https://www.rylosplanet.fi/">
+          Rylos Planet
+        </a>
       </UpperRight>
       <LowerLeft>
-        <h2 ref={seconds}>0.0</h2>
         <h1>{score}</h1>
       </LowerLeft>
       <Global />
       <LowerRight>
-        <div style={{ width: health + '%' }} />
+        <Radio />
       </LowerRight>
     </>
   )
 }
 
 const base = css`
-  font-family: 'Teko', sans-serif;
+  font-family: 'Sedgwick Ave', sans-serif;
   position: absolute;
   text-transform: uppercase;
   font-weight: 900;
   font-variant-numeric: slashed-zero tabular-nums;
   line-height: 1em;
   pointer-events: none;
-  color: indianred;
+  color: #9b51e0;
 `
 
 const UpperLeft = styled.div`
@@ -76,7 +70,7 @@ const UpperRight = styled.div`
   pointer-events: all;
   cursor: pointer;
   & > a {
-    color: indianred;
+    color: #9b51e0;
     text-decoration: none;
   }
   @media only screen and (max-width: 900px) {
@@ -86,13 +80,13 @@ const UpperRight = styled.div`
 
 const LowerLeft = styled.div`
   ${base}
-  bottom: 5px;
+  bottom: 50px;
   left: 50px;
   transform: skew(-5deg, -5deg);
   width: 200px;
   & > h1 {
     margin: 0;
-    font-size: 10em;
+    font-size: 6em;
     line-height: 1em;
   }
   & > h2 {
@@ -113,16 +107,10 @@ const LowerLeft = styled.div`
 
 const LowerRight = styled.div`
   ${base}
-  bottom: 70px;
+  bottom: 50px;
   right: 50px;
   transform: skew(5deg, 5deg);
-  height: 40px;
-  width: 150px;
   background: black;
-  & > div {
-    height: 100%;
-    background: indianred;
-  }
 
   @media only screen and (max-width: 900px) {
     bottom: 50px;

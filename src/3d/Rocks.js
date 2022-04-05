@@ -13,8 +13,10 @@ const Rock = React.memo(({ nodes, materials, data }) => {
   const ref = useRef()
   const { clock } = useStore((state) => state.mutation)
   useFrame(() => {
-    const r = Math.cos((clock.getElapsedTime() / 2) * data.speed) * Math.PI
-    ref.current.rotation.set(r, r, r)
+    try {
+      const r = Math.cos((clock.getElapsedTime() / 2) * data.speed) * Math.PI
+      ref.current.rotation.set(r, r, r)
+    } catch (err) {}
   })
   return (
     <group ref={ref} position={data.offset} scale={[data.scale, data.scale, data.scale]}>
