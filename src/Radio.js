@@ -20,8 +20,22 @@ export const Radio = () => {
     audioElement.play()
   }, [currentSoundtrackIndex])
 
-  const prev = () => setCurrentSoundtrackIndex(Math.max(currentSoundtrackIndex - 1, 0))
-  const next = () => setCurrentSoundtrackIndex(Math.min(currentSoundtrackIndex + 1, soundTrack.length - 1))
+  const prev = () => {
+    const prevIndex = Math.max(currentSoundtrackIndex - 1, 0)
+    if (currentSoundtrackIndex === prevIndex) {
+      setCurrentSoundtrackIndex(soundTrack.length - 1)
+    } else {
+      setCurrentSoundtrackIndex(prevIndex)
+    }
+  }
+  const next = () => {
+    const nextIndex = Math.min(currentSoundtrackIndex + 1, soundTrack.length - 1)
+    if (nextIndex === currentSoundtrackIndex) {
+      setCurrentSoundtrackIndex(0)
+    } else {
+      setCurrentSoundtrackIndex(nextIndex)
+    }
+  }
 
   const toggle = () => {
     const isPlaying = audioElement.duration > 0 && !audioElement.paused

@@ -7,7 +7,6 @@ export default function Hud() {
   const points = useStore((state) => state.points)
   const immunity = useStore((state) => state.immunity)
   const health = useStore((state) => state.health)
-  const sound = useStore((state) => state.sound)
   const toggle = useStore((state) => state.actions.toggleSound)
   const score = useMemo(() => (points >= 1000 ? (points / 1000).toFixed(1) + 'K' : points), [points])
 
