@@ -14,88 +14,132 @@ import Hud from './Hud'
 import useStore, { reset } from './store'
 import rylosLogo from './images/rylos-logo.png'
 import styled, { css } from 'styled-components'
+import gameOver from './audio/game-over.wav'
+import { useEffect } from 'react'
 
 export default function App() {
-  const lastPoints = useStore((state) => state.lastPoints)
   const menu = useStore((state) => state.menu)
-  const { fov } = useStore((state) => state.mutation)
-  const actions = useStore((state) => state.actions)
 
   if (menu === 'dead') {
-    return (
-      <Menu>
-        <h1>Game Over</h1>
-        <p>Score: {lastPoints}</p>
-        <MenuAction onClick={reset}>Restart</MenuAction>
-      </Menu>
-    )
+    return <MenuDead />
   }
 
   if (menu === 'game') {
-    return (
-      <div onPointerMove={actions.updateMouse} onClick={actions.shoot}>
-        <Canvas
-          linear
-          mode="concurrent"
-          dpr={[1, 1.5]}
-          gl={{ antialias: false }}
-          camera={{ position: [0, 0, 2000], near: 0.01, far: 10000, fov }}
-          onCreated={({ gl, camera }) => {
-            actions.init(camera)
-            gl.toneMapping = THREE.CineonToneMapping
-            gl.setClearColor(new THREE.Color('#020209'))
-          }}>
-          <fog attach="fog" args={['#070710', 100, 700]} />
-          <ambientLight intensity={0.25} />
-          <Stars />
-          <Explosions />
-          <Track />
-          <Particles />
-          <Suspense fallback={null}>
-            <Rocks />
-            <Planets />
-            <Rig>
-              <Ship />
-            </Rig>
-          </Suspense>
-          <Effects />
-        </Canvas>
-        <Hud />
-      </div>
-    )
+    return <MenuGame />
   }
 
   if (menu === 'credits') {
-    return (
-      <Menu>
-        <MenuAction onClick={() => actions.menu()}>Back</MenuAction>
-        <Credits>
-          <h2>Credits</h2>
-          <p>
-            <a href="https://github.com/jakke-korpelainen/rylos-space-adventure">Source code</a>
-          </p>
-          <h3>Programming</h3>
-          <p>
-            <a href="https://jakke.fi">Jakke Korpelainen</a>
-          </p>
-          <p>
-            Based on tremendous work of <a href="https://github.com/drcmda">drcmda</a>
-          </p>
-          <h3>Assets</h3>
-          <p>
-            Ship: <a href="https://sketchfab.com/themuffincoder">TheMuffinCoder</a>
-          </p>
-          <p>
-            Rocks: <a href="https://sketchfab.com/dzemalmclaren">Dzemal Semanic</a>
-          </p>
-          <h3>Music</h3>
-          <p>
-            <a href="https://www.rylosplanet.fi/">Rylos</a>
-          </p>
-        </Credits>
-      </Menu>
-    )
+    return <MenuCredits />
   }
+
+  return <MenuStart />
+}
+
+const Menu = (props) => {
+  return (
+    <MenuWrapper>
+      <MenuContent>{props.children}</MenuContent>
+    </MenuWrapper>
+  )
+}
+
+const MenuDead = () => {
+  const lastPoints = useStore((state) => state.lastPoints)
+
+  useEffect(() => {
+    const audioElement = new Audio()
+    audioElement.setAttribute('src', gameOver)
+    audioElement.play()
+
+    return () => {
+      audioElement.pause()
+      audioElement.removeAttribute('src')
+      audioElement.load()
+    }
+  })
+
+  return (
+    <Menu>
+      <h1>Game Over</h1>
+      <p>Score: {lastPoints}</p>
+      <MenuAction onClick={reset}>Restart</MenuAction>
+    </Menu>
+  )
+}
+
+const MenuCredits = () => {
+  const actions = useStore((state) => state.actions)
+
+  return (
+    <Menu>
+      <MenuAction onClick={() => actions.menu()}>Back</MenuAction>
+      <Credits>
+        <h2>Credits</h2>
+        <p>
+          <a href="https://github.com/jakke-korpelainen/rylos-space-adventure">Source code</a>
+        </p>
+        <h3>Programming</h3>
+        <p>
+          <a href="https://jakke.fi">Jakke Korpelainen</a>
+        </p>
+        <p>
+          Based on tremendous work of <a href="https://github.com/drcmda">drcmda</a>
+        </p>
+        <h3>Assets</h3>
+        <p>
+          Ship: <a href="https://sketchfab.com/themuffincoder">TheMuffinCoder</a>
+        </p>
+        <p>
+          Rocks: <a href="https://sketchfab.com/dzemalmclaren">Dzemal Semanic</a>
+        </p>
+        <h3>Music</h3>
+        <p>
+          <a href="https://www.rylosplanet.fi/">Rylos</a>
+        </p>
+      </Credits>
+    </Menu>
+  )
+}
+
+const MenuGame = () => {
+  const { fov } = useStore((state) => state.mutation)
+  const actions = useStore((state) => state.actions)
+
+  return (
+    <div onPointerMove={actions.updateMouse} onClick={actions.shoot}>
+      <Canvas
+        linear
+        mode="concurrent"
+        dpr={[1, 1.5]}
+        gl={{ antialias: false }}
+        camera={{ position: [0, 0, 2000], near: 0.01, far: 10000, fov }}
+        onCreated={({ gl, camera }) => {
+          actions.init(camera)
+          gl.toneMapping = THREE.CineonToneMapping
+          gl.setClearColor(new THREE.Color('#020209'))
+        }}>
+        <fog attach="fog" args={['#070710', 100, 700]} />
+        <ambientLight intensity={0.25} />
+        <Stars />
+        <Explosions />
+        <Track />
+        <Particles />
+        <Suspense fallback={null}>
+          <Rocks />
+          <Planets />
+          <Rig>
+            <Ship />
+          </Rig>
+        </Suspense>
+        <Effects />
+      </Canvas>
+      <Hud />
+    </div>
+  )
+}
+
+const MenuStart = () => {
+  const actions = useStore((state) => state.actions)
 
   return (
     <Menu>
@@ -118,14 +162,6 @@ export default function App() {
         Credits
       </MenuAction>
     </Menu>
-  )
-}
-
-const Menu = (props) => {
-  return (
-    <MenuWrapper>
-      <MenuContent>{props.children}</MenuContent>
-    </MenuWrapper>
   )
 }
 
