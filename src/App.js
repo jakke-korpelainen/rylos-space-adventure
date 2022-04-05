@@ -16,6 +16,7 @@ import rylosLogo from './images/rylos-logo.png'
 import styled, { css } from 'styled-components'
 
 export default function App() {
+  const lastPoints = useStore((state) => state.lastPoints)
   const menu = useStore((state) => state.menu)
   const { fov } = useStore((state) => state.mutation)
   const actions = useStore((state) => state.actions)
@@ -24,6 +25,7 @@ export default function App() {
     return (
       <Menu>
         <h1>Game Over</h1>
+        <p>Score: {lastPoints}</p>
         <MenuAction onClick={reset}>Restart</MenuAction>
       </Menu>
     )

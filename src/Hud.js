@@ -10,11 +10,13 @@ export default function Hud() {
   const toggle = useStore((state) => state.actions.toggleSound)
   const score = useMemo(() => (points >= 1000 ? (points / 1000).toFixed(1) + 'K' : points), [points])
 
+  const healthColor = health >= 50 ? 'green' : 'red'
+
   return (
     <>
       <UpperLeft onClick={() => toggle()}>
         <HealthContainer>
-          <HealthValue style={{ backgroundColor: immunity ? 'blue' : 'green', width: `${immunity ? 100 : health}%` }}>
+          <HealthValue style={{ backgroundColor: immunity ? 'blue' : healthColor, width: `${immunity ? 100 : health}%` }}>
             {immunity ? `Shield` : `${health}%`}
           </HealthValue>
         </HealthContainer>

@@ -18,6 +18,7 @@ const useStore = create((set, get) => {
     currentTrackIndex: 0,
     menu: undefined,
     camera: undefined,
+    lastPoints: 0,
     points: 0,
     health: 100,
     lasers: [],
@@ -129,7 +130,8 @@ const useStore = create((set, get) => {
           }
 
           if (get().health <= 0) {
-            set(() => ({ menu: 'dead' }))
+            const points = get().points
+            set(() => ({ menu: 'dead', lastPoints: points }))
           }
         })
       },
@@ -186,7 +188,7 @@ function randomRings(count, track) {
 }
 
 function reset() {
-  useStore.setState({ menu: 'game', health: 100 })
+  useStore.setState({ menu: 'game', health: 100, immunity: true, points: 0 })
 }
 
 function playAudio(audio, volume = 1, loop = false) {
