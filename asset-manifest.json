@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/rylos-space-adventure/static/css/main.b42222bc.chunk.css",
-    "main.js": "/rylos-space-adventure/static/js/main.bd5c0bb2.chunk.js",
-    "main.js.map": "/rylos-space-adventure/static/js/main.bd5c0bb2.chunk.js.map",
+    "main.js": "/rylos-space-adventure/static/js/main.a9210126.chunk.js",
+    "main.js.map": "/rylos-space-adventure/static/js/main.a9210126.chunk.js.map",
     "runtime-main.js": "/rylos-space-adventure/static/js/runtime-main.dc9b50ea.js",
     "runtime-main.js.map": "/rylos-space-adventure/static/js/runtime-main.dc9b50ea.js.map",
-    "static/js/2.e462146e.chunk.js": "/rylos-space-adventure/static/js/2.e462146e.chunk.js",
-    "static/js/2.e462146e.chunk.js.map": "/rylos-space-adventure/static/js/2.e462146e.chunk.js.map",
+    "static/js/2.e9a29b35.chunk.js": "/rylos-space-adventure/static/js/2.e9a29b35.chunk.js",
+    "static/js/2.e9a29b35.chunk.js.map": "/rylos-space-adventure/static/js/2.e9a29b35.chunk.js.map",
     "index.html": "/rylos-space-adventure/index.html",
     "static/css/main.b42222bc.chunk.css.map": "/rylos-space-adventure/static/css/main.b42222bc.chunk.css.map",
-    "static/js/2.e462146e.chunk.js.LICENSE.txt": "/rylos-space-adventure/static/js/2.e462146e.chunk.js.LICENSE.txt",
+    "static/js/2.e9a29b35.chunk.js.LICENSE.txt": "/rylos-space-adventure/static/js/2.e9a29b35.chunk.js.LICENSE.txt",
     "static/media/styles.css": "/rylos-space-adventure/static/media/SedgwickAve-Regular.875f9a3b.woff2",
     "static/media/cardiogram.dbd31cd6.png": "/rylos-space-adventure/static/media/cardiogram.dbd31cd6.png",
     "static/media/click.db461987.mp3": "/rylos-space-adventure/static/media/click.db461987.mp3",
@@ -39,8 +39,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.dc9b50ea.js",
-    "static/js/2.e462146e.chunk.js",
+    "static/js/2.e9a29b35.chunk.js",
     "static/css/main.b42222bc.chunk.css",
-    "static/js/main.bd5c0bb2.chunk.js"
+    "static/js/main.a9210126.chunk.js"
   ]
 }
