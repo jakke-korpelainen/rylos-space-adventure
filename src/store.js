@@ -80,8 +80,8 @@ const useStore = create((set, get) => {
         set({ camera })
         mutation.clock.start()
 
-        audio.playAudio(audio.engine, 1, true)
-        audio.playAudio(audio.engine2, 0.3, true)
+        audio.playAudio(audio.engine, 0.4, true)
+        audio.playAudio(audio.engine2, 0.4, true)
 
         addEffect(() => {
           const { immunity } = get()

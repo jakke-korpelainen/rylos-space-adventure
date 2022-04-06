@@ -17,6 +17,7 @@ import styled, { css } from 'styled-components'
 import gameOver from './audio/game-over.wav'
 import { Menu, MenuAction } from './Menu'
 import highscoreIcon from './images/award.svg'
+import { engine, engine2 } from './audio'
 
 export default function App() {
   const menu = useStore((state) => state.menu)
@@ -115,6 +116,13 @@ const MenuGame = () => {
   const actions = useStore((state) => state.actions)
 
   const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    return () => {
+      engine.pause()
+      engine2.pause()
+    }
+  }, [])
 
   return (
     <Wrapper>
