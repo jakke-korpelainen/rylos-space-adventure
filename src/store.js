@@ -176,7 +176,12 @@ const useStore = create((set, get) => {
         cancelLaserTO = setTimeout(() => set((state) => ({ lasers: state.lasers.filter((t) => Date.now() - t <= 1000) })), 1000)
         audio.playAudio(audio.zap, 0.25)
       },
-      updateMouse({ clientX: x, clientY: y }) {
+      // translate touches to movement
+      onTouchMove(e) {
+        const { clientX, clientY } = e.touches[0]
+        get().actions.move({ clientX, clientY })
+      },
+      move({ clientX: x, clientY: y }) {
         get().mutation.mouse.set(x - window.innerWidth / 2, y - window.innerHeight / 2)
       },
       test(data) {

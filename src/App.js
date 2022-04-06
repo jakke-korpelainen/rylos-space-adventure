@@ -115,7 +115,7 @@ const MenuGame = () => {
       <Loading style={!loading ? { opacity: 0, pointerEvents: 'none' } : {}}>
         <h1>Loading...</h1>
       </Loading>
-      <GameControls onPointerMove={actions.updateMouse} onClick={actions.shoot}>
+      <GameControls onTouchMove={actions.onTouchMove} onMouseMove={actions.move} onClick={actions.shoot}>
         <Canvas
           linear
           mode="concurrent"
