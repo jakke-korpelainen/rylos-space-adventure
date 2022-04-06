@@ -2,7 +2,7 @@ import React, { useMemo, useEffect } from 'react'
 import styled, { css, createGlobalStyle } from 'styled-components'
 import useStore from './store'
 import { Radio } from './Radio'
-import heartIcon from './images/cardiogram.png'
+import heartIcon from './images/cardiogram.svg'
 import heartbeat from './audio/heartbeat.wav'
 import garbage from './images/garbage.svg'
 
@@ -14,7 +14,7 @@ export default function Hud() {
   const score = useMemo(() => (points >= 1000 ? (points / 1000).toFixed(1) + 'K' : points), [points])
 
   const lowHealth = health < 50
-  const healthColor = lowHealth ? 'red' : 'green'
+  const healthColor = lowHealth ? '#c5411e' : '#008C20'
 
   useEffect(() => {
     const audioElement = new Audio()
@@ -42,7 +42,9 @@ export default function Hud() {
       <UpperLeft onClick={() => toggle()}>
         <HealthContainer>
           <img className={lowHealth ? 'pulse' : ''} src={heartIcon} />
-          <HealthValue style={{ backgroundColor: immunity ? 'blue' : healthColor, width: `${immunity ? 100 : health}%` }}>{health}%</HealthValue>
+          <div style={{ flexGrow: 1, marginRight: '1rem' }}>
+            <HealthValue style={{ backgroundColor: immunity ? 'blue' : healthColor, width: `${health}%` }}></HealthValue>
+          </div>
         </HealthContainer>
       </UpperLeft>
       <UpperRight>
@@ -103,11 +105,11 @@ const HealthContainer = styled.div`
 `
 
 const HealthValue = styled.div`
-  font-size: 1.5rem;
-  padding: 0.5rem 0.5rem;
   background: green;
   color: white;
   overflow: hidden;
+  transition: width 0.2s ease-in;
+  height: 100%;
 `
 
 const UpperLeft = styled.div`

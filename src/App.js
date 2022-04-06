@@ -36,6 +36,7 @@ export default function App() {
 }
 
 const MenuDead = () => {
+  const highScore = useStore((state) => state.highScore)
   const lastPoints = useStore((state) => state.lastPoints)
   const reset = useStore((state) => state.actions.reset)
 
@@ -54,7 +55,13 @@ const MenuDead = () => {
   return (
     <Menu>
       <h1>Game Over</h1>
-      <p>Score: {lastPoints}</p>
+      <Scores>
+        <p>Score: {lastPoints}</p>
+        {highScore > 0 && <p>Highscore: {highScore}</p>}
+
+        {lastPoints === highScore && <p>New highscore!</p>}
+      </Scores>
+
       <MenuAction onClick={reset}>Restart</MenuAction>
     </Menu>
   )
@@ -79,11 +86,6 @@ const MenuCredits = () => {
           Based on tremendous work of <a href="https://github.com/drcmda">drcmda</a>
         </p>
         <h3>Assets</h3>
-        <p>
-          <a href="https://www.flaticon.com/free-icons/heart" title="heart icons">
-            Heart icons created by Freepik - Flaticon
-          </a>
-        </p>
         <p>
           Ship: <a href="https://sketchfab.com/themuffincoder">TheMuffinCoder</a>
         </p>
@@ -176,6 +178,23 @@ const MenuStart = () => {
 
 const GameControls = styled.div`
   height: 100%;
+`
+
+const Scores = styled.div`
+  p {
+    font-size: 2rem;
+    width: 1200px;
+    max-width: 100%;
+    text-align: center;
+    margin-bottom: 2rem;
+    margin-top: 0;
+  }
+
+  @media only screen and (max-width: 900px) {
+    p {
+      font-size: 1.2rem;
+    }
+  }
 `
 
 const Wrapper = styled.div``

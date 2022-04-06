@@ -22,6 +22,7 @@ const useStore = create((set, get) => {
     camera: undefined,
     lastPoints: 0,
     points: 0,
+    highScore: 0,
     health: 100,
     lasers: [],
     explosions: [],
@@ -156,6 +157,10 @@ const useStore = create((set, get) => {
           if (get().health <= 0) {
             const points = get().points
             set(() => ({ menu: 'dead', lastPoints: points }))
+
+            if (get().highScore < points) {
+              set({ highScore: points })
+            }
           }
         })
       },

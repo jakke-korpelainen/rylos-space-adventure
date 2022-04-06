@@ -50,6 +50,7 @@ const MenuWrapper = styled.div`
     h1 {
       font-size: 2.5rem;
     }
+
     h1 + p {
       font-size: 1.2rem;
     }
