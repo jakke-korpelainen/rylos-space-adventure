@@ -69,6 +69,11 @@ const useStore = create((set, get) => {
       init(camera) {
         const { mutation, actions } = get()
 
+        const sessionHighscore = localStorage.getItem('rylos-space-adventure-hiscore')
+        if (sessionHighscore && parseInt(sessionHighscore)) {
+          set({ highScore: sessionHighscore })
+        }
+
         set({ camera })
         mutation.clock.start()
 
@@ -160,6 +165,7 @@ const useStore = create((set, get) => {
 
             if (get().highScore < points) {
               set({ highScore: points })
+              localStorage.setItem('rylos-space-adventure-hiscore', points)
             }
           }
         })
