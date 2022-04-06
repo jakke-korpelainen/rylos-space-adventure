@@ -108,7 +108,7 @@ export default function Ship() {
           </mesh>
         </group>
       </group>
-      <pointLight ref={exhaust} position={[0, 1, 30]} distance={50} intensity={1} color="orangered" />
+      <pointLight ref={exhaust} position={[0, 1, 30]} distance={100} intensity={1} color="orangered" />
     </group>
   )
 }
