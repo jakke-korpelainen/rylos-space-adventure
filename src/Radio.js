@@ -62,7 +62,8 @@ export const Radio = () => {
       <RadioControls>
         <RadioTrack>
           <RadioTrackDetails>
-            <span>{currentTrack ? currentTrack.songName : '- Not playing -'}</span>
+            <span>{currentTrack?.songName}</span>
+            <span className="last">{currentTrack?.songName}</span>
           </RadioTrackDetails>
         </RadioTrack>
         <RadioActions>
@@ -92,6 +93,11 @@ const RadioWrapper = styled.div`
   box-shadow: 0 15px 15px rgba(0, 0, 0, 0.7);
   border-radius: 4px;
 
+  * {
+    cursor: pointer;
+    pointer-events: all;
+  }
+
   @media only screen and (max-width: 900px) {
     width: 100%;
   }
@@ -119,25 +125,31 @@ const RadioTrack = styled.div`
 `
 
 const RadioTrackDetails = styled.div`
+  position: relative;
   height: 100%;
   width: 100%;
   border-radius: 2px;
-  padding: 0.7rem 0.5rem;
+  padding: 1rem 0.5rem;
   overflow: hidden;
   background: black;
 
   span {
+    white-space: nowrap;
+    padding-left: 100%;
+    top: 8px;
+    position: absolute;
     color: white;
     display: inline-block;
-    animation: scroll-left 20s linear infinite;
+    animation: scroll-left 12s linear infinite;
+  }
+  span.last {
+    animation-delay: 6s;
   }
 `
 
 const RadioActions = styled.div`
   button {
     border-radius: 1rem;
-    pointer-events: all;
-    cursor: pointer;
     background: transparent;
     width: 3.5rem;
     margin-right: 0.5rem;

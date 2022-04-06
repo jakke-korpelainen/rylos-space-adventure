@@ -116,8 +116,7 @@ const UpperLeft = styled.div`
   left: 50px;
   font-size: 2em;
   transform: skew(5deg, 5deg);
-  pointer-events: all;
-  cursor: pointer;
+
   @media only screen and (max-width: 900px) {
     left: 20px;
     top: 20px;
@@ -136,6 +135,11 @@ const UpperRight = styled.div`
   pointer-events: all;
   cursor: pointer;
   text-shadow: 1px 1px 1px rgba(0, 0, 0.5);
+
+  * {
+    cursor: pointer;
+    pointer-events: all;
+  }
 
   @media only screen and (max-width: 900px) {
     top: 55px;
@@ -179,6 +183,11 @@ const LowerRight = styled.div`
   bottom: 50px;
   right: 50px;
   transform: skew(5deg, 5deg);
+
+  * {
+    cursor: pointer;
+    pointer-events: all;
+  }
 
   @media only screen and (max-width: 900px) {
     transform: none;

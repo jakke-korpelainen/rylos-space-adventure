@@ -127,7 +127,7 @@ const MenuGame = () => {
             setLoading(false)
           }}>
           <fog attach="fog" args={['#070710', 100, 700]} />
-          <ambientLight intensity={0.25} />
+          <ambientLight intensity={0.2} />
           <Stars />
           <Explosions />
           <Track />

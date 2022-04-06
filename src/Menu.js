@@ -20,6 +20,14 @@ const MenuWrapper = styled.div`
   justify-content: center;
   color: white;
 
+  * {
+    cursor: default;
+  }
+
+  a {
+    cursor: pointer;
+  }
+
   h1 {
     font-size: 6rem;
     font-family: 'Sedgwick Ave';

@@ -8,9 +8,13 @@ body,
   height: 100%;
 }
 
+* {
+  cursor: none;
+}
+
 @font-face {
   font-family: 'Sedgwick Ave';
-  src: url(./fonts/SedgwickAve-Regular.woff2) format("woff2");
+  src: url(./fonts/SedgwickAve-Regular.woff2) format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -18,7 +22,7 @@ body,
 
 @font-face {
   font-family: 'Cantarell';
-  src: url(./fonts/Cantarell-Regular.woff2) format("woff2");
+  src: url(./fonts/Cantarell-Regular.woff2) format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -28,41 +32,42 @@ body {
   font-family: 'Cantarell';
 }
 
-h1,h2,h3,h4,h5,h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: 'Sedgwick Ave';
 }
 
 .pulse {
   transform: scale(1);
-	animation: pulse 0.4s infinite;
+  animation: pulse 0.4s infinite;
 }
 
 @keyframes scroll-left {
   0% {
-      -moz-transform: translateX(200%);
-      -webkit-transform: translateX(200%);
-      transform: translateX(200%);
+    transform: translateX(0);
   }
   100% {
-      -moz-transform: translateX(-200%);
-      -webkit-transform: translateX(-200%);
-      transform: translateX(-200%);
+    transform: translateX(-100%);
   }
 }
 
 @keyframes pulse {
-	0% {
-		transform: scale(0.95);
-		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
-	}
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+  }
 
-	70% {
-		transform: scale(1);
-		box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
-	}
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+  }
 
-	100% {
-		transform: scale(0.95);
-		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
-	}
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
 }
