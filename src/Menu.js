@@ -37,7 +37,7 @@ const MenuWrapper = styled.div`
     text-align: center;
   }
 
-  h1 + p {
+  div + p {
     font-size: 2rem;
     width: 1200px;
     max-width: 100%;
@@ -51,7 +51,7 @@ const MenuWrapper = styled.div`
       font-size: 2.5rem;
     }
 
-    h1 + p {
+    div + p {
       font-size: 1.2rem;
     }
   }

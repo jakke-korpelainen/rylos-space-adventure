@@ -46,6 +46,18 @@ h6 {
   animation: pulse 0.525s infinite;
 }
 
+@keyframes wave-text{
+  00%{
+    transform: translateY(0em);
+  }
+  60%{
+    transform: translateY(-0.1em);
+  }
+  100%{
+    transform: translateY(0em);
+  }
+}
+
 @keyframes scroll-left {
   0% {
     transform: translateX(0);

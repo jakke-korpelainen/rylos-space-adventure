@@ -176,7 +176,28 @@ const MenuStart = () => {
   return (
     <Menu>
       <img src={rylosLogo} />
-      <h1>Space Adventure</h1>
+
+      <WaveWrapper>
+        <WaveWord>
+          <span>S</span>
+          <span>p</span>
+          <span>a</span>
+          <span>c</span>
+          <span>e</span>
+        </WaveWord>
+        <WaveWord>
+          <span>A</span>
+          <span>d</span>
+          <span>v</span>
+          <span>e</span>
+          <span>n</span>
+          <span>t</span>
+          <span>u</span>
+          <span>r</span>
+          <span>e</span>
+        </WaveWord>
+      </WaveWrapper>
+
       <p>
         Humankind has been dumping trash in to the space for ages. Now the trash are returning to the earth. Only Ned the Carrot and his loyal spaceship can
         stop the earth from being trashed.
@@ -199,6 +220,53 @@ const MenuStart = () => {
 
 const GameControls = styled.div`
   height: 100%;
+`
+
+const WaveWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+`
+
+const WaveWord = styled.h1`
+  display: inline-block;
+
+  &:first-of-type {
+    margin-right: 2rem;
+  }
+
+  span {
+    text-shadow: 2px 2px 5px #9b51e0;
+    display: inline-block;
+    animation: wave-text 1s ease-in-out infinite;
+  }
+
+  span:nth-of-type(1) {
+    animation-delay: 0s;
+  }
+  span:nth-of-type(2) {
+    animation-delay: 0.1s;
+  }
+  span:nth-of-type(3) {
+    animation-delay: 0.2s;
+  }
+  span:nth-of-type(4) {
+    animation-delay: 0.3s;
+  }
+  span:nth-of-type(5) {
+    animation-delay: 0.4s;
+  }
+  span:nth-of-type(6) {
+    animation-delay: 0.5s;
+  }
+  span:nth-of-type(7) {
+    animation-delay: 0.6s;
+  }
+  span:nth-of-type(8) {
+    animation-delay: 0.7s;
+  }
+  span:nth-of-type(9) {
+    animation-delay: 0.8s;
+  }
 `
 
 const Scores = styled.div`
