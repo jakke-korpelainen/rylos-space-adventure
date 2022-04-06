@@ -89,30 +89,26 @@ export default function Ship() {
         </group>
         <group rotation={[Math.PI / 2, Math.PI, 0]}>
           <mesh name="Renault_(S,_T1)_0" geometry={nodes['Renault_(S,_T1)_0'].geometry}>
-            <meshStandardMaterial color="#070707" />
+            <meshStandardMaterial color="#16161d" />
           </mesh>
           <mesh name="Renault_(S,_T1)_1" geometry={nodes['Renault_(S,_T1)_1'].geometry}>
-            <meshStandardMaterial color="black" />
+            <meshStandardMaterial color="#4c341c" />
           </mesh>
           <mesh name="Renault_(S,_T1)_2" geometry={nodes['Renault_(S,_T1)_2'].geometry}>
-            <meshStandardMaterial color="#070707" />
+            <meshStandardMaterial color="#16161d" />
           </mesh>
           <mesh name="Renault_(S,_T1)_3" geometry={nodes['Renault_(S,_T1)_3'].geometry}>
             <meshBasicMaterial color="lightblue" />
           </mesh>
           <mesh name="Renault_(S,_T1)_4" geometry={nodes['Renault_(S,_T1)_4'].geometry}>
-            <meshBasicMaterial color="white" />
+            <meshBasicMaterial color="orangered" />
           </mesh>
           <mesh name="Renault_(S,_T1)_5" geometry={nodes['Renault_(S,_T1)_5'].geometry}>
-            <meshBasicMaterial color="teal" />
+            <meshBasicMaterial color="orangered" />
           </mesh>
         </group>
       </group>
-      <pointLight ref={exhaust} position={[0, 1, 30]} distance={100} intensity={2.5} color="white" />
-      {/* <mesh ref={exhaust} scale={[1, 1, 30]} position={[0, 1, 30]}>
-        <dodecahedronBufferGeometry opacity={0} args={[1.5, 0]} />
-        <meshBasicMaterial opacity={0} color="lightblue" />
-      </mesh> */}
+      <pointLight ref={exhaust} position={[0, 1, 30]} distance={50} intensity={1} color="orangered" />
     </group>
   )
 }
