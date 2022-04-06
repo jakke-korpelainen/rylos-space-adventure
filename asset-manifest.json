@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/rylos-space-adventure/static/css/main.6e58ac29.chunk.css",
-    "main.js": "/rylos-space-adventure/static/js/main.8bd3eee9.chunk.js",
-    "main.js.map": "/rylos-space-adventure/static/js/main.8bd3eee9.chunk.js.map",
+    "main.css": "/rylos-space-adventure/static/css/main.520ef258.chunk.css",
+    "main.js": "/rylos-space-adventure/static/js/main.4575a567.chunk.js",
+    "main.js.map": "/rylos-space-adventure/static/js/main.4575a567.chunk.js.map",
     "runtime-main.js": "/rylos-space-adventure/static/js/runtime-main.dc9b50ea.js",
     "runtime-main.js.map": "/rylos-space-adventure/static/js/runtime-main.dc9b50ea.js.map",
     "static/js/2.ae0640af.chunk.js": "/rylos-space-adventure/static/js/2.ae0640af.chunk.js",
     "static/js/2.ae0640af.chunk.js.map": "/rylos-space-adventure/static/js/2.ae0640af.chunk.js.map",
     "index.html": "/rylos-space-adventure/index.html",
-    "static/css/main.6e58ac29.chunk.css.map": "/rylos-space-adventure/static/css/main.6e58ac29.chunk.css.map",
+    "static/css/main.520ef258.chunk.css.map": "/rylos-space-adventure/static/css/main.520ef258.chunk.css.map",
     "static/js/2.ae0640af.chunk.js.LICENSE.txt": "/rylos-space-adventure/static/js/2.ae0640af.chunk.js.LICENSE.txt",
     "static/media/styles.css": "/rylos-space-adventure/static/media/SedgwickAve-Regular.875f9a3b.woff2",
     "static/media/award.8c76d1fb.svg": "/rylos-space-adventure/static/media/award.8c76d1fb.svg",
@@ -37,12 +37,14 @@
     "static/media/rylos-misunderstood.d13d9c2d.jpg": "/rylos-space-adventure/static/media/rylos-misunderstood.d13d9c2d.jpg",
     "static/media/rylos-road.138ea8a0.mp3": "/rylos-space-adventure/static/media/rylos-road.138ea8a0.mp3",
     "static/media/rylos-road.86b24c20.png": "/rylos-space-adventure/static/media/rylos-road.86b24c20.png",
+    "static/media/select.2ed6fa3f.wav": "/rylos-space-adventure/static/media/select.2ed6fa3f.wav",
+    "static/media/start.35972233.ogg": "/rylos-space-adventure/static/media/start.35972233.ogg",
     "static/media/warp.1f9bec85.mp3": "/rylos-space-adventure/static/media/warp.1f9bec85.mp3"
   },
   "entrypoints": [
     "static/js/runtime-main.dc9b50ea.js",
     "static/js/2.ae0640af.chunk.js",
-    "static/css/main.6e58ac29.chunk.css",
-    "static/js/main.8bd3eee9.chunk.js"
+    "static/css/main.520ef258.chunk.css",
+    "static/js/main.4575a567.chunk.js"
   ]
 }
