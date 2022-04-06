@@ -16,7 +16,7 @@ import rylosLogo from './images/rylos-logo.png'
 import styled, { css } from 'styled-components'
 import gameOver from './audio/game-over.wav'
 import { Menu, MenuAction } from './Menu'
-import throttle from 'lodash.throttle'
+import highscoreIcon from './images/award.svg'
 
 export default function App() {
   const menu = useStore((state) => state.menu)
@@ -60,7 +60,12 @@ const MenuDead = () => {
         <p>Score: {lastPoints}</p>
         {highScore > 0 && <p>Highscore: {highScore}</p>}
 
-        {lastPoints === highScore && <p>New highscore!</p>}
+        {lastPoints > 0 && lastPoints === highScore && (
+          <Highscore>
+            <img src={highscoreIcon} />
+            <p>New highscore!</p>
+          </Highscore>
+        )}
       </Scores>
 
       <MenuAction onClick={reset}>Restart</MenuAction>
@@ -116,7 +121,14 @@ const MenuGame = () => {
       <Loading style={!loading ? { opacity: 0, pointerEvents: 'none' } : {}}>
         <h1>Loading...</h1>
       </Loading>
-      <GameControls onTouchMove={actions.onTouchMove} onMouseMove={actions.move} onMouseDown={actions.autofire} onMouseUp={actions.cancelAutofire}>
+      <GameControls
+        onTouchMove={actions.onTouchMove}
+        onPointerUp={actions.cancelAutofire}
+        onPointerMove={actions.move}
+        onPointerDown={(e) => {
+          actions.move(e)
+          actions.autofire(e)
+        }}>
         <Canvas
           linear
           mode="concurrent"
@@ -182,12 +194,10 @@ const GameControls = styled.div`
 `
 
 const Scores = styled.div`
-  p {
+  > p {
     font-size: 2rem;
-    width: 1200px;
-    max-width: 100%;
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     margin-top: 0;
   }
 
@@ -195,6 +205,24 @@ const Scores = styled.div`
     p {
       font-size: 1.2rem;
     }
+  }
+`
+
+const Highscore = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    max-width: 45px;
+    margin-right: 1rem;
+  }
+
+  p {
+    white-space: nowrap;
+    font-size: 2rem;
+    text-align: center;
+    color: goldenrod;
   }
 `
 

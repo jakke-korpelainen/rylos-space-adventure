@@ -174,7 +174,7 @@ const useStore = create((set, get) => {
         })
       },
       autofire: throttle((e) => {
-        if (e.button === 0) {
+        if (e && e.button === 0) {
           clearInterval(shootingTO)
           get().actions.fire()
 
