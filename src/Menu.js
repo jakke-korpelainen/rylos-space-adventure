@@ -19,14 +19,8 @@ const MenuWrapper = styled.div`
   align-items: center;
   justify-content: center;
   color: white;
-
-  * {
-    cursor: default;
-  }
-
-  a {
-    cursor: pointer;
-  }
+  padding: 2rem;
+  cursor: default;
 
   h1 {
     font-size: 6rem;
@@ -57,7 +51,17 @@ const MenuWrapper = styled.div`
   }
 `
 
-export const MenuAction = styled.button`
+export const MenuActions = styled.div`
+  justify-content: center;
+  align-items: center;
+  display: flex;
+
+  @media only screen and (max-width: 900px) {
+    flex-direction: column;
+  }
+`
+
+export const MenuActionItem = styled.button`
   border: 3px solid orangered;
   pointer-events: all;
   background: linear-gradient(#4f0158, #000000);
@@ -70,6 +74,21 @@ export const MenuAction = styled.button`
   min-width: 300px;
   padding: 0 2rem;
   margin-top: 1rem;
+  margin-right: 1rem;
+
+  transition: background linear 0.2s;
+
+  &:last-of-type {
+    margin-right: 0;
+  }
+
+  &:hover {
+    background: linear-gradient(#740181, #000000);
+  }
+
+  &:focus {
+    background: linear-gradient(#47004f, #000000);
+  }
 
   @media only screen and (max-width: 900px) {
     font-size: 2rem;
@@ -78,12 +97,23 @@ export const MenuAction = styled.button`
 
 const MenuContent = styled.div`
   height: 100%;
-  min-width: 80vw;
-  max-width: 90vw;
+  width: 1024px;
+  max-width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  img#logo {
+    margin-top: -4rem;
+    margin-bottom: -4rem;
+
+    @media only screen and (max-width: 900px) {
+      margin-top: -2rem;
+      margin-bottom: -2rem;
+    }
+  }
+
   img {
     max-width: 100%;
   }

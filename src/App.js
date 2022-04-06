@@ -15,9 +15,11 @@ import useStore from './store'
 import rylosLogo from './images/rylos-logo.png'
 import styled, { css } from 'styled-components'
 import gameOver from './audio/game-over.wav'
-import { Menu, MenuAction } from './Menu'
+import { Menu, MenuActions, MenuActionItem } from './Menu'
 import highscoreIcon from './images/award.svg'
-import { engine, engine2 } from './audio'
+import { engine, engine2, warp } from './audio'
+import startAudio from './audio/start.ogg'
+import selectAudio from './audio/select.wav'
 
 export default function App() {
   const menu = useStore((state) => state.menu)
@@ -59,8 +61,15 @@ const MenuDead = () => {
           </Highscore>
         )}
       </Scores>
-
-      <MenuAction onClick={reset}>Restart</MenuAction>
+      <MenuActions>
+        <MenuActionItem
+          onClick={() => {
+            new Audio(startAudio).play()
+            reset()
+          }}>
+          Play Again
+        </MenuActionItem>
+      </MenuActions>
     </Menu>
   )
 }
@@ -70,20 +79,29 @@ const MenuCredits = () => {
 
   return (
     <Menu>
-      <MenuAction onClick={() => actions.menu.start()}>Back</MenuAction>
+      <WaveWrapper>
+        <WaveWord>
+          <span>C</span>
+          <span>r</span>
+          <span>e</span>
+          <span>d</span>
+          <span>i</span>
+          <span>t</span>
+          <span>s</span>
+        </WaveWord>
+      </WaveWrapper>
       <Credits>
-        <h2>Credits</h2>
         <p>
           <a href="https://github.com/jakke-korpelainen/rylos-space-adventure">Source code</a>
         </p>
-        <h3>Programming</h3>
+        <h2>Programming</h2>
         <p>
           <a href="https://jakke.fi">Jakke Korpelainen</a>
         </p>
         <p>
           Based on tremendous work of <a href="https://github.com/drcmda">drcmda</a>
         </p>
-        <h3>Assets</h3>
+        <h2>Assets</h2>
         <p>
           Ship: <a href="https://sketchfab.com/themuffincoder">TheMuffinCoder</a>
         </p>
@@ -93,11 +111,20 @@ const MenuCredits = () => {
         <p>
           Crash sound created by <a href="https://freesound.org/s/95078/">sandyrb</a>
         </p>
-        <h3>Music</h3>
+        <h2>Music</h2>
         <p>
           <a href="https://www.rylosplanet.fi/">Rylos</a>
         </p>
       </Credits>
+      <MenuActions>
+        <MenuActionItem
+          onClick={() => {
+            new Audio(selectAudio).play()
+            actions.menu.start()
+          }}>
+          Back
+        </MenuActionItem>
+      </MenuActions>
     </Menu>
   )
 }
@@ -112,6 +139,7 @@ const MenuGame = () => {
     return () => {
       engine.pause()
       engine2.pause()
+      warp.pause()
     }
   }, [])
 
@@ -138,7 +166,10 @@ const MenuGame = () => {
             actions.init(camera)
             gl.toneMapping = THREE.CineonToneMapping
             gl.setClearColor(new THREE.Color('#020209'))
-            setLoading(false)
+
+            setTimeout(() => {
+              setLoading(false)
+            }, 500)
           }}>
           <fog attach="fog" args={['#070710', 100, 700]} />
           <ambientLight intensity={0.2} />
@@ -166,7 +197,7 @@ const MenuStart = () => {
 
   return (
     <Menu>
-      <img src={rylosLogo} />
+      <img id="logo" src={rylosLogo} />
 
       <WaveWrapper>
         <WaveWord>
@@ -193,18 +224,22 @@ const MenuStart = () => {
         Humankind has been dumping trash in to the space for ages. Now the trash are returning to the earth. Only Ned the Carrot and his loyal spaceship can
         stop the earth from being trashed.
       </p>
-      <MenuAction
-        onClick={() => {
-          actions.menu.game()
-        }}>
-        Play
-      </MenuAction>
-      <MenuAction
-        onClick={() => {
-          actions.menu.credits()
-        }}>
-        Credits
-      </MenuAction>
+      <MenuActions>
+        <MenuActionItem
+          onClick={() => {
+            new Audio(startAudio).play()
+            actions.menu.game()
+          }}>
+          Play
+        </MenuActionItem>
+        <MenuActionItem
+          onClick={() => {
+            new Audio(selectAudio).play()
+            actions.menu.credits()
+          }}>
+          Credits
+        </MenuActionItem>
+      </MenuActions>
     </Menu>
   )
 }
@@ -226,7 +261,7 @@ const WaveWord = styled.h1`
   }
 
   span {
-    text-shadow: 2px 2px 5px #9b51e0;
+    text-shadow: 0 0 5px #fff, 0 0 60px #9b51e0;
     display: inline-block;
     animation: wave-text 1s ease-in-out infinite;
   }
@@ -293,7 +328,9 @@ const Highscore = styled.div`
   }
 `
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+  height: 100%;
+`
 
 const Loading = styled.div`
   position: absolute;
