@@ -15,8 +15,9 @@ const direction = new THREE.Vector3()
 
 export default function Ship() {
   const { nodes } = useLoader(GLTFLoader, '/rylos-space-adventure/ship.gltf')
+  const clock = useStore((state) => state.clock)
   const mutation = useStore((state) => state.mutation)
-  const { clock, mouse, ray } = mutation
+  const { mouse, ray } = mutation
   const lasers = useStore((state) => state.lasers)
   const main = useRef()
   const laserGroup = useRef()
@@ -26,14 +27,21 @@ export default function Ship() {
   const target = useRef()
 
   useFrame(() => {
-    main.current.position.z = Math.sin(clock.getElapsedTime() * 40) * Math.PI * 0.2
-    main.current.rotation.z += (mouse.x / 500 - main.current.rotation.z) * 0.2
+    if (clock) {
+      main.current.position.z = Math.sin(clock.getElapsedTime() * 40) * Math.PI * 0.2
+      main.current.rotation.z += (mouse.x / 500 - main.current.rotation.z) * 0.2
+    }
+
     main.current.rotation.x += (-mouse.y / 1200 - main.current.rotation.x) * 0.2
     main.current.rotation.y += (-mouse.x / 1200 - main.current.rotation.y) * 0.2
     main.current.position.x += (mouse.x / 10 - main.current.position.x) * 0.2
     main.current.position.y += (25 + -mouse.y / 10 - main.current.position.y) * 0.2
-    exhaust.current.scale.x = 1 + Math.sin(clock.getElapsedTime() * 200)
-    exhaust.current.scale.y = 1 + Math.sin(clock.getElapsedTime() * 200)
+
+    if (clock) {
+      exhaust.current.scale.x = 1 + Math.sin(clock.getElapsedTime() * 200)
+      exhaust.current.scale.y = 1 + Math.sin(clock.getElapsedTime() * 200)
+    }
+
     exhaust.current.scale.x = 0.01
     exhaust.current.scale.y = 0.01
     for (let i = 0; i < lasers.length; i++) {

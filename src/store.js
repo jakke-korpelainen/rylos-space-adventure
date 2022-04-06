@@ -7,7 +7,7 @@ import throttle from 'lodash.throttle'
 
 let guid = 1
 const COLLISION_DAMAGE = 20
-const DIFFICULTY_INCREASE_INTERVAL = 15000
+const DIFFICULTY_INCREASE_INTERVAL = 15 // seconds
 const MAXIMUM_TRAVEL_SPEED = 10000
 const FIRING_DELAY = 120 // 500 RPM
 
@@ -31,12 +31,12 @@ const useStore = create((set, get) => {
     explosions: [],
     rocks: randomData(100, track, 150, 8, () => 1 + Math.random() * 2.5),
     immunity: true,
+    clock: null,
 
     mutation: {
       t: 0,
       position: new THREE.Vector3(),
-      startTime: Date.now(),
-
+      startTime: null,
       track,
       scale: 15,
       fov: 70,
@@ -45,7 +45,6 @@ const useStore = create((set, get) => {
       looptime: 40 * 1000,
       binormal: new THREE.Vector3(),
       normal: new THREE.Vector3(),
-      clock: new THREE.Clock(false),
       mouse: new THREE.Vector2(-250, 50),
 
       // Re-usable objects
@@ -77,8 +76,10 @@ const useStore = create((set, get) => {
           set({ highScore: sessionHighscore })
         }
 
-        set({ camera })
-        mutation.clock.start()
+        set({ camera, clock: new THREE.Clock(true) })
+
+        const clock = get().clock
+        mutation.startTime = Date.now()
 
         audio.playAudio(audio.engine, 0.4, true)
         audio.playAudio(audio.engine2, 0.4, true)
@@ -96,9 +97,10 @@ const useStore = create((set, get) => {
           const time = Date.now()
 
           // increase travel speed every (n) seconds overtime with a hard cap at very difficult
-          const timeDiff = time - mutation.startTime
-          const difficultyModifier = Math.min(timeDiff / DIFFICULTY_INCREASE_INTERVAL, 30)
-          const looptime = Math.max((40 - difficultyModifier) * 1000, MAXIMUM_TRAVEL_SPEED)
+          const difficultyLevel = clock.getElapsedTime() / DIFFICULTY_INCREASE_INTERVAL
+          const difficultyModifier = 40 - difficultyLevel
+
+          const looptime = Math.max(difficultyModifier * 1000, MAXIMUM_TRAVEL_SPEED)
 
           const t = (mutation.t = ((time - mutation.startTime) % looptime) / looptime)
 
@@ -164,7 +166,8 @@ const useStore = create((set, get) => {
 
           if (get().health <= 0) {
             const points = get().points
-            set(() => ({ menu: 'dead', lastPoints: points }))
+
+            set({ menu: 'dead', lastPoints: points, clock: null })
 
             if (get().highScore < points) {
               set({ highScore: points })

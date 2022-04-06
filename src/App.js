@@ -56,6 +56,9 @@ const MenuDead = () => {
 
   return (
     <Menu>
+      <audio autoPlay>
+        <source src={gameOver} />
+      </audio>
       <h1>Game Over</h1>
       <Scores>
         <p>Score: {lastPoints}</p>

@@ -11,7 +11,7 @@ export default function Rocks() {
 
 const Rock = React.memo(({ nodes, materials, data }) => {
   const ref = useRef()
-  const { clock } = useStore((state) => state.mutation)
+  const clock = useStore((state) => state.clock)
   useFrame(() => {
     try {
       const r = Math.cos((clock.getElapsedTime() / 2) * data.speed) * Math.PI
