@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/rylos-space-adventure/static/css/main.acec78b0.chunk.css",
-    "main.js": "/rylos-space-adventure/static/js/main.ea1e3a78.chunk.js",
-    "main.js.map": "/rylos-space-adventure/static/js/main.ea1e3a78.chunk.js.map",
+    "main.css": "/rylos-space-adventure/static/css/main.fe56e199.chunk.css",
+    "main.js": "/rylos-space-adventure/static/js/main.62e2c6b1.chunk.js",
+    "main.js.map": "/rylos-space-adventure/static/js/main.62e2c6b1.chunk.js.map",
     "runtime-main.js": "/rylos-space-adventure/static/js/runtime-main.dc9b50ea.js",
     "runtime-main.js.map": "/rylos-space-adventure/static/js/runtime-main.dc9b50ea.js.map",
     "static/js/2.b41942bd.chunk.js": "/rylos-space-adventure/static/js/2.b41942bd.chunk.js",
     "static/js/2.b41942bd.chunk.js.map": "/rylos-space-adventure/static/js/2.b41942bd.chunk.js.map",
     "index.html": "/rylos-space-adventure/index.html",
-    "static/css/main.acec78b0.chunk.css.map": "/rylos-space-adventure/static/css/main.acec78b0.chunk.css.map",
+    "static/css/main.fe56e199.chunk.css.map": "/rylos-space-adventure/static/css/main.fe56e199.chunk.css.map",
     "static/js/2.b41942bd.chunk.js.LICENSE.txt": "/rylos-space-adventure/static/js/2.b41942bd.chunk.js.LICENSE.txt",
     "static/media/styles.css": "/rylos-space-adventure/static/media/SedgwickAve-Regular.875f9a3b.woff2",
-    "static/media/cardiogram.dbd31cd6.png": "/rylos-space-adventure/static/media/cardiogram.dbd31cd6.png",
+    "static/media/cardiogram.3d5622b7.svg": "/rylos-space-adventure/static/media/cardiogram.3d5622b7.svg",
     "static/media/click.db461987.mp3": "/rylos-space-adventure/static/media/click.db461987.mp3",
     "static/media/crash.184e27d2.wav": "/rylos-space-adventure/static/media/crash.184e27d2.wav",
     "static/media/earth.45ed3b77.jpg": "/rylos-space-adventure/static/media/earth.45ed3b77.jpg",
@@ -41,7 +41,7 @@
   "entrypoints": [
     "static/js/runtime-main.dc9b50ea.js",
     "static/js/2.b41942bd.chunk.js",
-    "static/css/main.acec78b0.chunk.css",
-    "static/js/main.ea1e3a78.chunk.js"
+    "static/css/main.fe56e199.chunk.css",
+    "static/js/main.62e2c6b1.chunk.js"
   ]
 }
