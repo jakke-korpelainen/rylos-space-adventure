@@ -16,6 +16,7 @@ import rylosLogo from './images/rylos-logo.png'
 import styled, { css } from 'styled-components'
 import gameOver from './audio/game-over.wav'
 import { Menu, MenuAction } from './Menu'
+import throttle from 'lodash.throttle'
 
 export default function App() {
   const menu = useStore((state) => state.menu)
@@ -115,7 +116,7 @@ const MenuGame = () => {
       <Loading style={!loading ? { opacity: 0, pointerEvents: 'none' } : {}}>
         <h1>Loading...</h1>
       </Loading>
-      <GameControls onTouchMove={actions.onTouchMove} onMouseMove={actions.move} onClick={actions.shoot}>
+      <GameControls onTouchMove={actions.onTouchMove} onMouseMove={actions.move} onMouseDown={actions.autofire} onMouseUp={actions.cancelAutofire}>
         <Canvas
           linear
           mode="concurrent"

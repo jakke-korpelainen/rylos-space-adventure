@@ -3,17 +3,20 @@ import { Curves } from 'three/examples/jsm/curves/CurveExtras'
 import { addEffect } from '@react-three/fiber'
 import create from 'zustand'
 import * as audio from './audio'
+import throttle from 'lodash.throttle'
 
 let guid = 1
 const COLLISION_DAMAGE = 20
 const DIFFICULTY_INCREASE_INTERVAL = 15000
 const MAXIMUM_TRAVEL_SPEED = 10000
+const FIRING_DELAY = 120 // 500 RPM
 
 const useStore = create((set, get) => {
   let spline = new Curves.GrannyKnot()
   let track = new THREE.TubeBufferGeometry(spline, 250, 0.2, 10, true)
   let cancelLaserTO = undefined
   let cancelExplosionTO = undefined
+  let shootingTO = undefined
   const box = new THREE.Box3()
 
   return {
@@ -138,7 +141,7 @@ const useStore = create((set, get) => {
           }
 
           // player movement collisions
-          const rockCollisions = r.filter((data) => data.distance < 15)
+          const rockCollisions = r.filter((data) => data.distance < 30)
           if (rockCollisions.length > 0) {
             audio.playAudio(audio.crash, 1, false)
 
@@ -170,7 +173,20 @@ const useStore = create((set, get) => {
           }
         })
       },
-      shoot() {
+      autofire: throttle((e) => {
+        if (e.button === 0) {
+          clearInterval(shootingTO)
+          get().actions.fire()
+
+          shootingTO = setInterval(() => {
+            get().actions.fire()
+          }, FIRING_DELAY)
+        }
+      }, FIRING_DELAY),
+      cancelAutofire() {
+        clearInterval(shootingTO)
+      },
+      fire() {
         set((state) => ({ lasers: [...state.lasers, Date.now()] }))
         clearTimeout(cancelLaserTO)
         cancelLaserTO = setTimeout(() => set((state) => ({ lasers: state.lasers.filter((t) => Date.now() - t <= 1000) })), 1000)

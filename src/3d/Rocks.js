@@ -6,7 +6,7 @@ import useStore from '../store'
 export default function Rocks() {
   const gltf = useLoader(GLTFLoader, '/rylos-space-adventure/rock.gltf')
   const rocks = useStore((state) => state.rocks)
-  return rocks.map((data) => <Rock {...gltf} key={data.guid} data={data} />)
+  return rocks.map((data) => <Rock {...gltf} key={`rock-${data.guid}`} data={data} />)
 }
 
 const Rock = React.memo(({ nodes, materials, data }) => {
