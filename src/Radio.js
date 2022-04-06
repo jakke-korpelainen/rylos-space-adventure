@@ -82,19 +82,18 @@ export const Radio = () => {
 }
 
 const RadioWrapper = styled.div`
-  max-width: 300px;
-  min-width: 15vw;
+  width: 400px;
+  max-width: 100%;
   background: linear-gradient(#4f0158, #000000);
   flex-direction: row;
   display: flex;
   padding: 10px;
-  width: 100%;
   overflow: hidden;
   box-shadow: 0 15px 15px rgba(0, 0, 0, 0.7);
   border-radius: 4px;
 
   @media only screen and (max-width: 900px) {
-    max-width: 100%;
+    width: 100%;
   }
 `
 

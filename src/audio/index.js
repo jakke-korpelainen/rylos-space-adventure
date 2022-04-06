@@ -55,4 +55,11 @@ const warp = new Audio(warpAudio)
 const click = new Audio(clickAudio)
 const explosion = new Audio(explosionAudio)
 
+export function playAudio(audio, volume = 1, loop = false) {
+  audio.currentTime = 0
+  audio.volume = volume
+  audio.loop = loop
+  audio.play()
+}
+
 export { crash, soundTrack, zap, engine, engine2, warp, click, explosion, mp3 }

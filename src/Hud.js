@@ -42,9 +42,7 @@ export default function Hud() {
       <UpperLeft onClick={() => toggle()}>
         <HealthContainer>
           <img className={lowHealth ? 'pulse' : ''} src={heartIcon} />
-          <HealthValue style={{ backgroundColor: immunity ? 'blue' : healthColor, width: `${immunity ? 100 : health}%` }}>
-            {immunity ? `Invulnerable` : `${health}%`}
-          </HealthValue>
+          <HealthValue style={{ backgroundColor: immunity ? 'blue' : healthColor, width: `${immunity ? 100 : health}%` }}>{health}%</HealthValue>
         </HealthContainer>
       </UpperLeft>
       <UpperRight>
@@ -109,11 +107,12 @@ const HealthValue = styled.div`
   padding: 0.5rem 0.5rem;
   background: green;
   color: white;
+  overflow: hidden;
 `
 
 const UpperLeft = styled.div`
   ${base}
-  top: 40px;
+  top: 50px;
   left: 50px;
   font-size: 2em;
   transform: skew(5deg, 5deg);
@@ -130,12 +129,21 @@ const UpperLeft = styled.div`
 const UpperRight = styled.div`
   ${base}
   text-align: right;
-  top: 40px;
+  top: 50px;
   right: 50px;
   font-size: 2em;
   transform: skew(-5deg, -5deg);
   pointer-events: all;
   cursor: pointer;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0.5);
+
+  @media only screen and (max-width: 900px) {
+    top: 55px;
+    right: 30px;
+    transform: none;
+    font-size: 1.5em;
+  }
+
   & > a {
     color: #9b51e0;
     text-decoration: none;
@@ -158,7 +166,8 @@ const LowerLeft = styled.div`
     line-height: 1em;
   }
   @media only screen and (max-width: 900px) {
-    bottom: 150px;
+    left: 20px;
+    bottom: 140px;
     h1 {
       font-size: 3em !important;
     }

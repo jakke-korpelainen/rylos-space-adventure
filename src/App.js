@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import React, { Suspense } from 'react'
+import React, { Suspense, useState, useEffect } from 'react'
 import { Canvas } from '@react-three/fiber'
 import Stars from './3d/Stars'
 import Planets from './3d/Planets'
@@ -11,11 +11,11 @@ import Track from './3d/Track'
 import Ship from './3d/Ship'
 import Rig from './3d/Rig'
 import Hud from './Hud'
-import useStore, { reset } from './store'
+import useStore from './store'
 import rylosLogo from './images/rylos-logo.png'
 import styled, { css } from 'styled-components'
 import gameOver from './audio/game-over.wav'
-import { useEffect } from 'react'
+import { Menu, MenuAction } from './Menu'
 
 export default function App() {
   const menu = useStore((state) => state.menu)
@@ -35,16 +35,9 @@ export default function App() {
   return <MenuStart />
 }
 
-const Menu = (props) => {
-  return (
-    <MenuWrapper>
-      <MenuContent>{props.children}</MenuContent>
-    </MenuWrapper>
-  )
-}
-
 const MenuDead = () => {
   const lastPoints = useStore((state) => state.lastPoints)
+  const reset = useStore((state) => state.actions.reset)
 
   useEffect(() => {
     const audioElement = new Audio()
@@ -72,7 +65,7 @@ const MenuCredits = () => {
 
   return (
     <Menu>
-      <MenuAction onClick={() => actions.menu()}>Back</MenuAction>
+      <MenuAction onClick={() => actions.menu.start()}>Back</MenuAction>
       <Credits>
         <h2>Credits</h2>
         <p>
@@ -113,36 +106,44 @@ const MenuGame = () => {
   const { fov } = useStore((state) => state.mutation)
   const actions = useStore((state) => state.actions)
 
+  const [loading, setLoading] = useState(true)
+
   return (
-    <div onPointerMove={actions.updateMouse} onClick={actions.shoot}>
-      <Canvas
-        linear
-        mode="concurrent"
-        dpr={[1, 1.5]}
-        gl={{ antialias: false }}
-        camera={{ position: [0, 0, 2000], near: 0.01, far: 10000, fov }}
-        onCreated={({ gl, camera }) => {
-          actions.init(camera)
-          gl.toneMapping = THREE.CineonToneMapping
-          gl.setClearColor(new THREE.Color('#020209'))
-        }}>
-        <fog attach="fog" args={['#070710', 100, 700]} />
-        <ambientLight intensity={0.25} />
-        <Stars />
-        <Explosions />
-        <Track />
-        <Particles />
-        <Suspense fallback={null}>
-          <Rocks />
-          <Planets />
-          <Rig>
-            <Ship />
-          </Rig>
-        </Suspense>
-        <Effects />
-      </Canvas>
-      <Hud />
-    </div>
+    <Wrapper>
+      <Loading style={!loading ? { opacity: 0, pointerEvents: 'none' } : {}}>
+        <h1>Loading...</h1>
+      </Loading>
+      <GameControls onPointerMove={actions.updateMouse} onClick={actions.shoot}>
+        <Canvas
+          linear
+          mode="concurrent"
+          dpr={[1, 1.5]}
+          gl={{ antialias: false }}
+          camera={{ position: [0, 0, 2000], near: 0.01, far: 10000, fov }}
+          onCreated={({ gl, camera }) => {
+            actions.init(camera)
+            gl.toneMapping = THREE.CineonToneMapping
+            gl.setClearColor(new THREE.Color('#020209'))
+            setLoading(false)
+          }}>
+          <fog attach="fog" args={['#070710', 100, 700]} />
+          <ambientLight intensity={0.25} />
+          <Stars />
+          <Explosions />
+          <Track />
+          <Particles />
+          <Suspense fallback={null}>
+            <Rocks />
+            <Planets />
+            <Rig>
+              <Ship />
+            </Rig>
+          </Suspense>
+          <Effects />
+        </Canvas>
+        <Hud />
+      </GameControls>
+    </Wrapper>
   )
 }
 
@@ -159,13 +160,13 @@ const MenuStart = () => {
       </p>
       <MenuAction
         onClick={() => {
-          actions.start()
+          actions.menu.game()
         }}>
         Play
       </MenuAction>
       <MenuAction
         onClick={() => {
-          actions.credits()
+          actions.menu.credits()
         }}>
         Credits
       </MenuAction>
@@ -173,22 +174,28 @@ const MenuStart = () => {
   )
 }
 
-const MenuAction = styled.button`
-  border: 3px solid orangered;
-  pointer-events: all;
-  background: linear-gradient(#4f0158, #000000);
-  cursor: pointer;
-  color: white;
-  font-weight: 900;
-  text-transform: uppercase;
-  font-size: 3rem;
-  font-family: 'Sedgwick Ave';
-  min-width: 300px;
-  padding: 0 2rem;
-  margin-top: 1rem;
+const GameControls = styled.div`
+  height: 100%;
+`
 
-  @media only screen and (max-width: 900px) {
-    font-size: 2rem;
+const Wrapper = styled.div``
+
+const Loading = styled.div`
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  transition: opacity linear 2s;
+
+  h1 {
+    font-size: 3rem;
+    color: white;
   }
 `
 
@@ -198,58 +205,6 @@ const Credits = styled.div`
 
   a {
     color: white;
-  }
-`
-
-const MenuWrapper = styled.div`
-  background-repeat: no-repeat;
-  background-position: center 10%;
-  background-color: #16161d;
-  display: flex;
-  width: 100%;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
-  color: white;
-
-  h1 {
-    font-size: 6rem;
-    font-family: 'Sedgwick Ave';
-    text-transform: uppercase;
-    margin-bottom: 0;
-    margin-top: 0;
-    text-align: center;
-  }
-
-  h1 + p {
-    font-size: 2rem;
-    width: 1200px;
-    max-width: 100%;
-    text-align: center;
-    margin-bottom: 5rem;
-    margin-top: 0;
-  }
-
-  @media only screen and (max-width: 900px) {
-    h1 {
-      font-size: 2.5rem;
-    }
-    h1 + p {
-      font-size: 1.2rem;
-    }
-  }
-`
-
-const MenuContent = styled.div`
-  height: 100%;
-  min-width: 80vw;
-  max-width: 90vw;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  img {
-    max-width: 100%;
   }
 `
 

@@ -51,14 +51,19 @@ const useStore = create((set, get) => {
     },
 
     actions: {
-      menu() {
-        set({ menu: null })
+      menu: {
+        start() {
+          set({ menu: null })
+        },
+        game() {
+          set({ menu: 'game' })
+        },
+        credits() {
+          set({ menu: 'credits' })
+        }
       },
-      start() {
-        set({ menu: 'game' })
-      },
-      credits() {
-        set({ menu: 'credits' })
+      reset() {
+        set({ menu: 'game', health: 100, immunity: true, points: 0 })
       },
       init(camera) {
         const { mutation, actions } = get()
@@ -66,8 +71,8 @@ const useStore = create((set, get) => {
         set({ camera })
         mutation.clock.start()
 
-        playAudio(audio.engine, 1, true)
-        playAudio(audio.engine2, 0.3, true)
+        audio.playAudio(audio.engine, 1, true)
+        audio.playAudio(audio.engine2, 0.3, true)
 
         addEffect(() => {
           const { immunity } = get()
@@ -85,7 +90,6 @@ const useStore = create((set, get) => {
           const timeDiff = time - mutation.startTime
           const difficultyModifier = Math.min(timeDiff / DIFFICULTY_INCREASE_INTERVAL, 30)
           const looptime = Math.max((40 - difficultyModifier) * 1000, MAXIMUM_TRAVEL_SPEED)
-          console.log(difficultyModifier, looptime)
 
           const t = (mutation.t = ((time - mutation.startTime) % looptime) / looptime)
 
@@ -97,7 +101,7 @@ const useStore = create((set, get) => {
           if (t > 0.3 && t < 0.4) {
             if (!warping) {
               warping = true
-              playAudio(audio.warp)
+              audio.playAudio(audio.warp)
             }
           } else if (t > 0.5) warping = false
 
@@ -106,7 +110,11 @@ const useStore = create((set, get) => {
 
           const previous = mutation.hits
           mutation.hits = r.length
-          if (previous === 0 && mutation.hits) playAudio(audio.click)
+          if (previous === 0 && mutation.hits) {
+            audio.playAudio(audio.click)
+          }
+
+          // laser targed collisions
           const lasers = get().lasers
           if (mutation.hits && lasers.length && time - lasers[lasers.length - 1] < 100) {
             const updates = r.map((data) => ({ time: Date.now(), ...data }))
@@ -123,9 +131,10 @@ const useStore = create((set, get) => {
             }))
           }
 
+          // player movement collisions
           const rockCollisions = r.filter((data) => data.distance < 15)
           if (rockCollisions.length > 0) {
-            playAudio(audio.crash, 1, false)
+            audio.playAudio(audio.crash, 1, false)
 
             const updates = rockCollisions.map((data) => ({ time: Date.now(), ...data }))
             set((state) => ({ explosions: [...state.explosions, ...updates] }))
@@ -154,7 +163,7 @@ const useStore = create((set, get) => {
         set((state) => ({ lasers: [...state.lasers, Date.now()] }))
         clearTimeout(cancelLaserTO)
         cancelLaserTO = setTimeout(() => set((state) => ({ lasers: state.lasers.filter((t) => Date.now() - t <= 1000) })), 1000)
-        playAudio(audio.zap, 0.25)
+        audio.playAudio(audio.zap, 0.25)
       },
       updateMouse({ clientX: x, clientY: y }) {
         get().mutation.mouse.set(x - window.innerWidth / 2, y - window.innerHeight / 2)
@@ -185,16 +194,4 @@ function randomData(count, track, radius, size, scale) {
   })
 }
 
-function reset() {
-  useStore.setState({ menu: 'game', health: 100, immunity: true, points: 0 })
-}
-
-function playAudio(audio, volume = 1, loop = false) {
-  audio.currentTime = 0
-  audio.volume = volume
-  audio.loop = loop
-  audio.play()
-}
-
 export default useStore
-export { audio, playAudio, reset }
