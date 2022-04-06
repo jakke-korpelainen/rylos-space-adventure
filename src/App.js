@@ -42,18 +42,6 @@ const MenuDead = () => {
   const lastPoints = useStore((state) => state.lastPoints)
   const reset = useStore((state) => state.actions.reset)
 
-  useEffect(() => {
-    const audioElement = new Audio()
-    audioElement.setAttribute('src', gameOver)
-    audioElement.play()
-
-    return () => {
-      audioElement.pause()
-      audioElement.removeAttribute('src')
-      audioElement.load()
-    }
-  })
-
   return (
     <Menu>
       <audio autoPlay>

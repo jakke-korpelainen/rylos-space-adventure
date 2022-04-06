@@ -93,10 +93,9 @@ const HealthContainer = styled.div`
   flex-direction: row;
   background: #333;
   border: 2px solid #666;
-  min-width: 10vw;
   margin-top: 1rem;
   padding: 0.5rem;
-  max-width: 150px;
+  width: 100%;
 
   img {
     max-width: 45px;
@@ -118,11 +117,12 @@ const UpperLeft = styled.div`
   left: 50px;
   font-size: 2em;
   transform: skew(5deg, 5deg);
+  width: 250px;
 
   @media only screen and (max-width: 900px) {
+    width: 200px;
     left: 20px;
     top: 20px;
-    transform: none;
     font-size: 1.5em;
   }
 `
