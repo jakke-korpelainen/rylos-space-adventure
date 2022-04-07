@@ -167,6 +167,7 @@ const useStore = create((set, get) => {
           if (get().health <= 0) {
             const points = get().points
 
+            get().cancelAutofire()
             set({ menu: "dead", lastPoints: points, clock: null })
 
             if (get().highScore < points) {
