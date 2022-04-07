@@ -1,8 +1,8 @@
-import * as THREE from "three"
-import React, { useRef } from "react"
+import { useRef } from "react"
 import { useLoader, useFrame } from "@react-three/fiber"
+import * as THREE from "three"
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader"
-import useStore from "../store"
+import { useGameStore } from "../store"
 
 const geometry = new THREE.BoxBufferGeometry(1, 1, 40)
 const red = new THREE.Color("red")
@@ -14,51 +14,67 @@ const position = new THREE.Vector3()
 const direction = new THREE.Vector3()
 
 export default function Ship() {
-  const { nodes } = useLoader(GLTFLoader, "/rylos-space-adventure/ship.gltf")
-  const clock = useStore((state) => state.clock)
-  const mutation = useStore((state) => state.mutation)
+  const { nodes } = useLoader(GLTFLoader, "/rylos-space-adventure/ship.gltf") as any
+  const clock = useGameStore((state) => state.clock)
+  const mutation = useGameStore((state) => state.mutation)
   const { mouse, ray } = mutation
-  const lasers = useStore((state) => state.lasers)
-  const main = useRef()
-  const laserGroup = useRef()
-  const laserLight = useRef()
-  const exhaust = useRef()
-  const cross = useRef()
-  const target = useRef()
+  const lasers = useGameStore((state) => state.lasers)
+  const main = useRef<THREE.Group>()
+  const laserGroup = useRef<THREE.Group>()
+  const laserLight = useRef<THREE.PointLight>()
+  const exhaust = useRef<THREE.PointLight>()
+  const cross = useRef<THREE.Group>()
+  const target = useRef<THREE.Group>()
 
   useFrame(() => {
-    if (clock) {
-      main.current.position.z = Math.sin(clock.getElapsedTime() * 40) * Math.PI * 0.2
+    if (main.current) {
+      if (clock) {
+        main.current.position.z = Math.sin(clock.getElapsedTime() * 40) * Math.PI * 0.2
+      }
+
       main.current.rotation.z += (mouse.x / 500 - main.current.rotation.z) * 0.2
+      main.current.rotation.x += (-mouse.y / 1200 - main.current.rotation.x) * 0.2
+      main.current.rotation.y += (-mouse.x / 1200 - main.current.rotation.y) * 0.2
+      main.current.position.x += (mouse.x / 10 - main.current.position.x) * 0.2
+      main.current.position.y += (25 + -mouse.y / 10 - main.current.position.y) * 0.2
     }
 
-    main.current.rotation.x += (-mouse.y / 1200 - main.current.rotation.x) * 0.2
-    main.current.rotation.y += (-mouse.x / 1200 - main.current.rotation.y) * 0.2
-    main.current.position.x += (mouse.x / 10 - main.current.position.x) * 0.2
-    main.current.position.y += (25 + -mouse.y / 10 - main.current.position.y) * 0.2
+    if (exhaust.current) {
+      if (clock) {
+        exhaust.current.scale.x = 1 + Math.sin(clock.getElapsedTime() * 200)
+        exhaust.current.scale.y = 1 + Math.sin(clock.getElapsedTime() * 200)
+      }
 
-    if (clock) {
-      exhaust.current.scale.x = 1 + Math.sin(clock.getElapsedTime() * 200)
-      exhaust.current.scale.y = 1 + Math.sin(clock.getElapsedTime() * 200)
+      exhaust.current.scale.x = 0.01
+      exhaust.current.scale.y = 0.01
     }
 
-    exhaust.current.scale.x = 0.01
-    exhaust.current.scale.y = 0.01
-    for (let i = 0; i < lasers.length; i++) {
-      const group = laserGroup.current.children[i]
-      group.position.z -= 20
+    if (laserGroup.current) {
+      for (let i = 0; i < lasers.length; i++) {
+        const group = laserGroup.current.children[i] as THREE.Group
+        if (group.position) {
+          group.position.z -= 20
+        }
+      }
     }
-    laserLight.current.intensity += ((lasers.length && Date.now() - lasers[lasers.length - 1] < 100 ? 20 : 0) - laserLight.current.intensity) * 0.3
 
-    // Get ships orientation and save it to the stores ray
-    main.current.getWorldPosition(position)
-    main.current.getWorldDirection(direction)
+    if (laserLight.current) {
+      laserLight.current.intensity += ((lasers.length && Date.now() - lasers[lasers.length - 1] < 100 ? 20 : 0) - laserLight.current.intensity) * 0.3
+    }
+
+    // get ships orientation and save it to the stores ray
+    if (main.current) {
+      main.current.getWorldPosition(position)
+      main.current.getWorldDirection(direction)
+    }
+
     ray.origin.copy(position)
     ray.direction.copy(direction.negate())
 
     crossMaterial.color = mutation.hits ? red : orangered
-    // cross.current.visible = true // !mutation.hits
-    target.current.visible = !!mutation.hits
+    if (target.current) {
+      target.current.visible = !!mutation.hits
+    }
   })
 
   return (
@@ -86,9 +102,9 @@ export default function Ship() {
             <boxGeometry args={[2, 40, 2]} />
           </mesh>
         </group>
-        <pointLight ref={laserLight} position={[0, 0, -20]} distance={100} intensity={0} color={ambientYellowLight} />
+        <pointLight ref={laserLight} position={[0, 0, -20]} distance={100} intensity={0.5} color={ambientYellowLight} />
         <group ref={laserGroup}>
-          {lasers.map((t, i) => (
+          {lasers.map((_, i) => (
             <group key={i}>
               <mesh position={[-2.8, 0, -0.8]} geometry={geometry} material={laserMaterial} />
               <mesh position={[2.8, 0, -0.8]} geometry={geometry} material={laserMaterial} />

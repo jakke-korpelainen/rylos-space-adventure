@@ -1,11 +1,11 @@
 import { Menu, MenuActions, MenuActionItem } from "./Menu"
 import styled from "styled-components"
 import selectAudio from "../audio/select.wav"
-import useStore from "../store"
+import { useGameStore } from "../store"
 import { Wave } from "../Wave"
 
 export const MenuCredits = () => {
-  const actions = useStore((state) => state.actions)
+  const intro = useGameStore((state) => state.actions.game.intro)
 
   return (
     <Menu>
@@ -40,7 +40,7 @@ export const MenuCredits = () => {
         <MenuActionItem
           onClick={() => {
             new Audio(selectAudio).play()
-            actions.menu.start()
+            intro()
           }}>
           Back
         </MenuActionItem>

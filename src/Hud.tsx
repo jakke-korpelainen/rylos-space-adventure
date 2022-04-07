@@ -1,20 +1,35 @@
-import React, { useMemo, useEffect } from "react"
+import { useMemo, useEffect, Fragment } from "react"
 import styled, { css, createGlobalStyle } from "styled-components"
-import useStore from "../store"
-import { Radio } from "./Radio"
-import heartIcon from "../images/cardiogram.svg"
-import heartbeat from "../audio/heartbeat.wav"
-import garbage from "../images/garbage.svg"
+import { useGameStore } from "./store"
+import { Radio } from "./Menu/Radio"
+import heartIcon from "./images/cardiogram.svg"
+import heartbeat from "./audio/heartbeat.wav"
+import garbage from "./images/garbage.svg"
+
+const LOW_HEALTH_TRESHOLD = 50
+const HEALTH_COLOR_LOW = "#c5411e"
+const HEALTH_COLOR_NORMAL = "#008C20"
+const HEALTH_COLOR_IMMUNITY = "blue"
+
+const isLowHealth = (health: number) => health < LOW_HEALTH_TRESHOLD
+const getHealthColor = (immunity: boolean, health: number) => {
+  if (immunity) {
+    return HEALTH_COLOR_IMMUNITY
+  }
+  if (isLowHealth(health)) {
+    return HEALTH_COLOR_LOW
+  }
+
+  return HEALTH_COLOR_NORMAL
+}
 
 export default function Hud() {
-  const points = useStore((state) => state.points)
-  const immunity = useStore((state) => state.immunity)
-  const health = useStore((state) => state.health)
-  const toggle = useStore((state) => state.actions.toggleSound)
+  const points = useGameStore((state) => state.points)
+  const immunity = useGameStore((state) => state.immunity)
+  const health = useGameStore((state) => state.health)
   const score = useMemo(() => (points >= 1000 ? (points / 1000).toFixed(1) + "K" : points), [points])
 
-  const lowHealth = health < 50
-  const healthColor = lowHealth ? "#c5411e" : "#008C20"
+  const lowHealth = isLowHealth(health)
 
   useEffect(() => {
     const audioElement = new Audio()
@@ -38,23 +53,23 @@ export default function Hud() {
   }, [lowHealth])
 
   return (
-    <>
-      <UpperLeft onClick={() => toggle()}>
+    <Fragment>
+      <UpperLeft>
         <HealthContainer>
-          <img className={lowHealth ? "pulse" : ""} src={heartIcon} />
-          <div style={{ flexGrow: 1, marginRight: "1rem" }}>
-            <HealthValue style={{ backgroundColor: immunity ? "blue" : healthColor, width: `${health}%` }}></HealthValue>
-          </div>
+          <img alt="Health" className={lowHealth ? "pulse" : ""} src={heartIcon} />
+          <HealthValueContainer>
+            <HealthValue health={health} healthColor={getHealthColor(immunity, health)}></HealthValue>
+          </HealthValueContainer>
         </HealthContainer>
       </UpperLeft>
       <UpperRight>
-        <a target="_blank" href="https://www.rylosplanet.fi/">
+        <a target="_blank" rel="noopener noreferrer" href="https://www.rylosplanet.fi/">
           Rylos Planet
         </a>
       </UpperRight>
       <LowerLeft>
         <Score>
-          <img src={garbage} />
+          <img alt="Garbage" src={garbage} />
           <h1>{score}</h1>
         </Score>
       </LowerLeft>
@@ -62,7 +77,7 @@ export default function Hud() {
       <LowerRight>
         <Radio />
       </LowerRight>
-    </>
+    </Fragment>
   )
 }
 
@@ -103,11 +118,17 @@ const HealthContainer = styled.div`
   }
 `
 
-const HealthValue = styled.div`
-  background: green;
+const HealthValueContainer = styled.div`
+  flex-grow: 1;
+  margin-right: 1rem;
+`
+
+const HealthValue = styled.div<{ healthColor: string; health: number }>`
+  background: ${(p) => p.healthColor};
   color: white;
   overflow: hidden;
   transition: width 0.2s ease-in;
+  width: ${(p) => p.health}%;
   height: 100%;
 `
 

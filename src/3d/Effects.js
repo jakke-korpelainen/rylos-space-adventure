@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react"
+import { useRef, useEffect } from "react"
 import { extend, useThree, useFrame } from "@react-three/fiber"
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer"
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass"
@@ -6,6 +6,7 @@ import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass"
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass"
 import { FilmPass } from "three/examples/jsm/postprocessing/FilmPass"
 
+// TODO: typescript issues with this file possibly due to this extend
 extend({ EffectComposer, ShaderPass, RenderPass, UnrealBloomPass, FilmPass })
 
 export default function Effects() {

@@ -2,12 +2,13 @@ import { Menu, MenuActions, MenuActionItem } from "./Menu"
 import styled from "styled-components"
 import gameOver from "../audio/game-over.wav"
 import highscoreIcon from "../images/award.svg"
-import useStore from "../store"
+import { useGameStore } from "../store"
+import startAudio from "../audio/start.ogg"
 
 export const MenuDead = () => {
-  const highScore = useStore((state) => state.highScore)
-  const lastPoints = useStore((state) => state.lastPoints)
-  const reset = useStore((state) => state.actions.reset)
+  const highScore = useGameStore((state) => state.highScore)
+  const lastPoints = useGameStore((state) => state.lastPoints)
+  const reset = useGameStore((state) => state.actions.game.reset)
 
   return (
     <Menu>
@@ -21,7 +22,7 @@ export const MenuDead = () => {
 
         {lastPoints > 0 && lastPoints === highScore && (
           <Highscore>
-            <img src={highscoreIcon} />
+            <img alt="Award" src={highscoreIcon} />
             <p>New highscore!</p>
           </Highscore>
         )}

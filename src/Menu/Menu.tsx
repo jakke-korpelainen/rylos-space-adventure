@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 
-export const Menu = (props) => {
+export const Menu = (props: { children: React.ReactNode }) => {
   return (
     <MenuWrapper>
       <MenuContent>{props.children}</MenuContent>

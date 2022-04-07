@@ -1,6 +1,10 @@
 import styled from "styled-components"
 
-export const Wave = (props) => (
+interface IWaveProps {
+  words: string[]
+}
+
+export const Wave = (props: IWaveProps) => (
   <WaveWrapper>
     {props.words.map((word) => (
       <WaveWord key={word}>

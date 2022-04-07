@@ -9,20 +9,17 @@
     "game",
     "drei"
   ],
-  "main": "src/index.js",
   "dependencies": {
     "@react-three/fiber": "6.0.15",
+    "@types/uuid": "^8.3.4",
     "lodash.throttle": "^4.1.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-scripts": "^5.0.0",
     "styled-components": "^5.3.5",
     "three": "0.127.0",
+    "uuid": "^8.3.2",
     "zustand": "^3.7.2"
-  },
-  "devDependencies": {
-    "gh-pages": "^3.2.3",
-    "typescript": "^4.6.3"
   },
   "scripts": {
     "predeploy": "npm run build",
@@ -32,10 +29,33 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+  "eslintConfig": {
+    "extends": [
+      "react-app"
+    ],
+    "rules": {
+      "react-hooks/exhaustive-deps": "off"
+    }
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@types/lodash.throttle": "^4.1.6",
+    "@types/react": "^17.0.43",
+    "@types/react-dom": "^17.0.14",
+    "@types/styled-components": "^5.1.24",
+    "@types/three": "^0.127.0",
+    "gh-pages": "^3.2.3",
+    "typescript": "^4.6.3"
+  }
 }

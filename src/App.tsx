@@ -1,16 +1,15 @@
-import React from "react"
-import useStore from "./store"
+import { useGameStore } from "./store"
 import { css, createGlobalStyle } from "styled-components"
 import { MenuStart } from "./Menu/MenuStart"
 import { MenuDead } from "./Menu/MenuDead"
-import { MenuGame } from "./Menu/MenuGame"
+import { Game } from "./Game"
 import { MenuCredits } from "./Menu/MenuCredits"
 
 import fontCantarell from "./fonts/Cantarell-Regular.woff2"
 import fontSedgwickAve from "./fonts/SedgwickAve-Regular.woff2"
 
 export default function App() {
-  const menuState = useStore((state) => state.menu)
+  const menuState = useGameStore((state) => state.menu)
 
   let menu = <MenuStart />
 
@@ -18,7 +17,7 @@ export default function App() {
     menu = <MenuDead />
   }
   if (menuState === "game") {
-    menu = <MenuGame />
+    menu = <Game />
   }
   if (menuState === "credits") {
     menu = <MenuCredits />

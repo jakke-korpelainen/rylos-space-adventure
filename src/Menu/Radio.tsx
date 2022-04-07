@@ -1,6 +1,5 @@
 import rewindIcon from "../images/rewind.svg"
 import playIcon from "../images/play.svg"
-import React from "react"
 import { soundTrack } from "../audio"
 import { useEffect, useState } from "react"
 import styled from "styled-components"
@@ -57,7 +56,7 @@ export const Radio = () => {
   return (
     <RadioWrapper>
       <RadioCover>
-        <img src={currentTrack.songCover} />
+        <img alt="Album Cover" src={currentTrack.songCover} />
       </RadioCover>
       <RadioControls>
         <RadioTrack>
@@ -68,13 +67,13 @@ export const Radio = () => {
         </RadioTrack>
         <RadioActions>
           <button>
-            <img onClick={prev} src={rewindIcon} />
+            <img alt="Back" onClick={prev} src={rewindIcon} />
           </button>
           <button onClick={toggle}>
-            <img src={playIcon} />
+            <img alt="Play / Stop" src={playIcon} />
           </button>
           <button>
-            <img onClick={next} src={rewindIcon} />
+            <img alt="Next" onClick={next} src={rewindIcon} />
           </button>
         </RadioActions>
       </RadioControls>

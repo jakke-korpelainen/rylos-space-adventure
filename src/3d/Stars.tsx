@@ -1,4 +1,4 @@
-import React, { useMemo } from "react"
+import { useMemo } from "react"
 
 export default function Stars({ count = 2000 }) {
   const positions = useMemo(() => {

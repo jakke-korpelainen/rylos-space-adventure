@@ -1,24 +1,23 @@
 import Hud from "./Hud"
-import Stars from "../3d/Stars"
-import Planets from "../3d/Planets"
-import Effects from "../3d/Effects"
-import Particles from "../3d/Particles"
-import Rocks from "../3d/Rocks"
-import Explosions from "../3d/Explosions"
-import Track from "../3d/Track"
-import Ship from "../3d/Ship"
-import Rig from "../3d/Rig"
+import Stars from "./3d/Stars"
+import Planets from "./3d/Planets"
+import Effects from "./3d/Effects"
+import Particles from "./3d/Particles"
+import Rocks from "./3d/Rocks"
+import Explosions from "./3d/Explosions"
+import Track from "./3d/Track"
+import Ship from "./3d/Ship"
+import Rig from "./3d/Rig"
 import { Canvas } from "@react-three/fiber"
-import React, { Suspense, useState, useEffect } from "react"
-import * as THREE from "three"
+import { Suspense, useState, useEffect } from "react"
 import styled from "styled-components"
-import { engine, engine2, warp } from "../audio"
-import useStore from "../store"
+import { engine, engine2, warp } from "./audio"
+import { useGameStore } from "./store"
+import * as THREE from "three"
 
-export const MenuGame = () => {
-  const { fov } = useStore((state) => state.mutation)
-  const actions = useStore((state) => state.actions)
-
+export const Game = () => {
+  const { fov } = useGameStore((state) => state.mutation)
+  const actions = useGameStore((state) => state.actions)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -35,12 +34,15 @@ export const MenuGame = () => {
         <h1>Loading...</h1>
       </Loading>
       <GameControls
-        onTouchMove={actions.onTouchMove}
-        onPointerUp={actions.cancelAutofire}
-        onPointerMove={actions.move}
+        onTouchMove={(e) => {
+          const { clientX, clientY } = e.touches[0]
+          actions.player.move({ x: clientX, y: clientY })
+        }}
+        onPointerUp={actions.player.cancelAutofire}
+        onPointerMove={(e) => actions.player.move({ x: e.clientX, y: e.clientY })}
         onPointerDown={(e) => {
-          actions.move(e)
-          actions.autofire(e)
+          actions.player.move({ x: e.clientX, y: e.clientY })
+          actions.player.autofire(e)
         }}>
         <Canvas
           linear
@@ -49,7 +51,7 @@ export const MenuGame = () => {
           gl={{ antialias: false }}
           camera={{ position: [0, 0, 2000], near: 0.01, far: 10000, fov }}
           onCreated={({ gl, camera }) => {
-            actions.init(camera)
+            actions.game.init(camera)
             gl.toneMapping = THREE.CineonToneMapping
             gl.setClearColor(new THREE.Color("#020209"))
 
