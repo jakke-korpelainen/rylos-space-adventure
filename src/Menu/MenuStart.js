@@ -11,9 +11,7 @@ export const MenuStart = () => {
   return (
     <Menu>
       <img id="logo" src={rylosLogo} />
-
       <Wave words={["Space", "Adventure"]} />
-
       <p>
         Humankind has been dumping trash in to the space for ages. Now the trash are returning to the earth. Only Ned the Carrot and his loyal spaceship can
         stop the earth from being trashed.

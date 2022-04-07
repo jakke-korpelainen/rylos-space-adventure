@@ -92,6 +92,10 @@ export const MenuActionItem = styled.button`
 
   @media only screen and (max-width: 900px) {
     font-size: 2rem;
+
+    &:first-of-type {
+      margin-right: 0;
+    }
   }
 `
 
