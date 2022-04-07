@@ -1,5 +1,5 @@
-import React from 'react'
-import useStore from '../store'
+import React from "react"
+import useStore from "../store"
 
 export default function Track() {
   const { scale, track } = useStore((state) => state.mutation)

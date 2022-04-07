@@ -1,15 +1,15 @@
-import * as THREE from 'three'
-import { Curves } from 'three/examples/jsm/curves/CurveExtras'
-import { addEffect } from '@react-three/fiber'
-import create from 'zustand'
-import * as audio from './audio'
-import throttle from 'lodash.throttle'
+import * as THREE from "three"
+import { Curves } from "three/examples/jsm/curves/CurveExtras"
+import { addEffect } from "@react-three/fiber"
+import create from "zustand"
+import * as audio from "./audio"
+import throttle from "lodash.throttle"
 
 let guid = 1
 const COLLISION_DAMAGE = 20
 const DIFFICULTY_INCREASE_INTERVAL = 15 // seconds
 const MAXIMUM_TRAVEL_SPEED = 10000
-const FIRING_DELAY = 120 // 500 RPM
+const FIRING_DELAY = 200 // 300 rpm
 
 const useStore = create((set, get) => {
   let spline = new Curves.GrannyKnot()
@@ -59,19 +59,19 @@ const useStore = create((set, get) => {
           set({ menu: null })
         },
         game() {
-          set({ menu: 'game' })
+          set({ menu: "game" })
         },
         credits() {
-          set({ menu: 'credits' })
+          set({ menu: "credits" })
         }
       },
       reset() {
-        set({ menu: 'game', health: 100, immunity: true, points: 0 })
+        set({ menu: "game", health: 100, immunity: true, points: 0 })
       },
       init(camera) {
         const { mutation, actions } = get()
 
-        const sessionHighscore = localStorage.getItem('rylos-space-adventure-hiscore')
+        const sessionHighscore = localStorage.getItem("rylos-space-adventure-hiscore")
         if (sessionHighscore && parseInt(sessionHighscore)) {
           set({ highScore: sessionHighscore })
         }
@@ -167,11 +167,11 @@ const useStore = create((set, get) => {
           if (get().health <= 0) {
             const points = get().points
 
-            set({ menu: 'dead', lastPoints: points, clock: null })
+            set({ menu: "dead", lastPoints: points, clock: null })
 
             if (get().highScore < points) {
               set({ highScore: points })
-              localStorage.setItem('rylos-space-adventure-hiscore', points)
+              localStorage.setItem("rylos-space-adventure-hiscore", points)
             }
           }
         })
@@ -225,7 +225,7 @@ function randomData(count, track, radius, size, scale) {
       .clone()
       .add(new THREE.Vector3(-radius + Math.random() * radius * 2, -radius + Math.random() * radius * 2, -radius + Math.random() * radius * 2))
     const speed = 0.1 + Math.random()
-    return { guid: guid++, scale: typeof scale === 'function' ? scale() : scale, size, offset, pos, speed, radius, t, hit: new THREE.Vector3(), distance: 1000 }
+    return { guid: guid++, scale: typeof scale === "function" ? scale() : scale, size, offset, pos, speed, radius, t, hit: new THREE.Vector3(), distance: 1000 }
   })
 }
 

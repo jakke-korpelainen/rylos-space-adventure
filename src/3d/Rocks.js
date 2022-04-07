@@ -1,10 +1,10 @@
-import React, { useRef } from 'react'
-import { useFrame, useLoader } from '@react-three/fiber'
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
-import useStore from '../store'
+import React, { useRef } from "react"
+import { useFrame, useLoader } from "@react-three/fiber"
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader"
+import useStore from "../store"
 
 export default function Rocks() {
-  const gltf = useLoader(GLTFLoader, '/rylos-space-adventure/rock.gltf')
+  const gltf = useLoader(GLTFLoader, "/rylos-space-adventure/rock.gltf")
   const rocks = useStore((state) => state.rocks)
   return rocks.map((data) => <Rock {...gltf} key={`rock-${data.guid}`} data={data} />)
 }

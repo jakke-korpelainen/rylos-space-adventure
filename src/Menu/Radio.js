@@ -1,9 +1,9 @@
-import rewindIcon from './images/rewind.svg'
-import playIcon from './images/play.svg'
-import React from 'react'
-import { soundTrack } from './audio'
-import { useEffect, useState } from 'react'
-import styled from 'styled-components'
+import rewindIcon from "../images/rewind.svg"
+import playIcon from "../images/play.svg"
+import React from "react"
+import { soundTrack } from "../audio"
+import { useEffect, useState } from "react"
+import styled from "styled-components"
 
 export const Radio = () => {
   const initialSongIndex = Math.floor(Math.random() * (soundTrack.length - 1 - 0 + 1) + 0)
@@ -16,14 +16,14 @@ export const Radio = () => {
     audioElement.play()
     return () => {
       audioElement.pause()
-      audioElement.removeAttribute('src')
+      audioElement.removeAttribute("src")
       audioElement.load()
     }
   }, [])
 
   useEffect(() => {
     audioElement.pause()
-    audioElement.setAttribute('src', soundTrack[currentSoundtrackIndex].songSrc)
+    audioElement.setAttribute("src", soundTrack[currentSoundtrackIndex].songSrc)
     audioElement.load()
     audioElement.play()
   }, [currentSoundtrackIndex])

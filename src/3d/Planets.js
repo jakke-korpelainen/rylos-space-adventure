@@ -1,8 +1,8 @@
-import * as THREE from 'three'
-import React, { useRef } from 'react'
-import { useLoader } from '@react-three/fiber'
-import earthImg from '../images/earth.jpg'
-import moonImg from '../images/moon.png'
+import * as THREE from "three"
+import React, { useRef } from "react"
+import { useLoader } from "@react-three/fiber"
+import earthImg from "../images/earth.jpg"
+import moonImg from "../images/moon.png"
 
 export default function Planets() {
   const ref = useRef()

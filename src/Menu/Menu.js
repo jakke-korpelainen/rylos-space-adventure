@@ -1,5 +1,5 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react"
+import styled from "styled-components"
 
 export const Menu = (props) => {
   return (
@@ -24,7 +24,7 @@ const MenuWrapper = styled.div`
 
   h1 {
     font-size: 6rem;
-    font-family: 'Sedgwick Ave';
+    font-family: "Sedgwick Ave";
     text-transform: uppercase;
     margin-bottom: 0;
     margin-top: 0;
@@ -70,7 +70,7 @@ export const MenuActionItem = styled.button`
   font-weight: 900;
   text-transform: uppercase;
   font-size: 3rem;
-  font-family: 'Sedgwick Ave';
+  font-family: "Sedgwick Ave";
   min-width: 300px;
   padding: 0 2rem;
   margin-top: 1rem;

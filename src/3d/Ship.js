@@ -1,20 +1,20 @@
-import * as THREE from 'three'
-import React, { useRef } from 'react'
-import { useLoader, useFrame } from '@react-three/fiber'
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
-import useStore from '../store'
+import * as THREE from "three"
+import React, { useRef } from "react"
+import { useLoader, useFrame } from "@react-three/fiber"
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader"
+import useStore from "../store"
 
 const geometry = new THREE.BoxBufferGeometry(1, 1, 40)
-const red = new THREE.Color('red')
-const orangered = new THREE.Color('orangered')
-const ambientYellowLight = new THREE.Color('#FFF293')
+const red = new THREE.Color("red")
+const orangered = new THREE.Color("orangered")
+const ambientYellowLight = new THREE.Color("#FFF293")
 const laserMaterial = new THREE.MeshBasicMaterial({ color: orangered })
 const crossMaterial = new THREE.MeshBasicMaterial({ color: orangered, fog: false })
 const position = new THREE.Vector3()
 const direction = new THREE.Vector3()
 
 export default function Ship() {
-  const { nodes } = useLoader(GLTFLoader, '/rylos-space-adventure/ship.gltf')
+  const { nodes } = useLoader(GLTFLoader, "/rylos-space-adventure/ship.gltf")
   const clock = useStore((state) => state.clock)
   const mutation = useStore((state) => state.mutation)
   const { mouse, ray } = mutation
@@ -96,22 +96,22 @@ export default function Ship() {
           ))}
         </group>
         <group rotation={[Math.PI / 2, Math.PI, 0]}>
-          <mesh name="Renault_(S,_T1)_0" geometry={nodes['Renault_(S,_T1)_0'].geometry}>
+          <mesh name="Renault_(S,_T1)_0" geometry={nodes["Renault_(S,_T1)_0"].geometry}>
             <meshStandardMaterial color="#16161d" />
           </mesh>
-          <mesh name="Renault_(S,_T1)_1" geometry={nodes['Renault_(S,_T1)_1'].geometry}>
+          <mesh name="Renault_(S,_T1)_1" geometry={nodes["Renault_(S,_T1)_1"].geometry}>
             <meshStandardMaterial color="#4c341c" />
           </mesh>
-          <mesh name="Renault_(S,_T1)_2" geometry={nodes['Renault_(S,_T1)_2'].geometry}>
+          <mesh name="Renault_(S,_T1)_2" geometry={nodes["Renault_(S,_T1)_2"].geometry}>
             <meshStandardMaterial color="#16161d" />
           </mesh>
-          <mesh name="Renault_(S,_T1)_3" geometry={nodes['Renault_(S,_T1)_3'].geometry}>
+          <mesh name="Renault_(S,_T1)_3" geometry={nodes["Renault_(S,_T1)_3"].geometry}>
             <meshBasicMaterial color="lightblue" />
           </mesh>
-          <mesh name="Renault_(S,_T1)_4" geometry={nodes['Renault_(S,_T1)_4'].geometry}>
+          <mesh name="Renault_(S,_T1)_4" geometry={nodes["Renault_(S,_T1)_4"].geometry}>
             <meshBasicMaterial color="orangered" />
           </mesh>
-          <mesh name="Renault_(S,_T1)_5" geometry={nodes['Renault_(S,_T1)_5'].geometry}>
+          <mesh name="Renault_(S,_T1)_5" geometry={nodes["Renault_(S,_T1)_5"].geometry}>
             <meshBasicMaterial color="orangered" />
           </mesh>
         </group>

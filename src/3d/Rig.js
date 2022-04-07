@@ -1,6 +1,6 @@
-import React, { useRef } from 'react'
-import { useThree, useFrame } from '@react-three/fiber'
-import useStore from '../store'
+import React, { useRef } from "react"
+import { useThree, useFrame } from "@react-three/fiber"
+import useStore from "../store"
 
 let offset = 0
 export default function Rig({ children }) {

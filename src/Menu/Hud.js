@@ -1,20 +1,20 @@
-import React, { useMemo, useEffect } from 'react'
-import styled, { css, createGlobalStyle } from 'styled-components'
-import useStore from './store'
-import { Radio } from './Radio'
-import heartIcon from './images/cardiogram.svg'
-import heartbeat from './audio/heartbeat.wav'
-import garbage from './images/garbage.svg'
+import React, { useMemo, useEffect } from "react"
+import styled, { css, createGlobalStyle } from "styled-components"
+import useStore from "../store"
+import { Radio } from "./Radio"
+import heartIcon from "../images/cardiogram.svg"
+import heartbeat from "../audio/heartbeat.wav"
+import garbage from "../images/garbage.svg"
 
 export default function Hud() {
   const points = useStore((state) => state.points)
   const immunity = useStore((state) => state.immunity)
   const health = useStore((state) => state.health)
   const toggle = useStore((state) => state.actions.toggleSound)
-  const score = useMemo(() => (points >= 1000 ? (points / 1000).toFixed(1) + 'K' : points), [points])
+  const score = useMemo(() => (points >= 1000 ? (points / 1000).toFixed(1) + "K" : points), [points])
 
   const lowHealth = health < 50
-  const healthColor = lowHealth ? '#c5411e' : '#008C20'
+  const healthColor = lowHealth ? "#c5411e" : "#008C20"
 
   useEffect(() => {
     const audioElement = new Audio()
@@ -22,17 +22,17 @@ export default function Hud() {
     audioElement.loop = true
 
     if (lowHealth) {
-      audioElement.setAttribute('src', heartbeat)
+      audioElement.setAttribute("src", heartbeat)
       audioElement.load()
       audioElement.play()
     } else {
       audioElement.pause()
-      audioElement.removeAttribute('src')
+      audioElement.removeAttribute("src")
       audioElement.load()
     }
     return () => {
       audioElement.pause()
-      audioElement.removeAttribute('src')
+      audioElement.removeAttribute("src")
       audioElement.load()
     }
   }, [lowHealth])
@@ -41,9 +41,9 @@ export default function Hud() {
     <>
       <UpperLeft onClick={() => toggle()}>
         <HealthContainer>
-          <img className={lowHealth ? 'pulse' : ''} src={heartIcon} />
-          <div style={{ flexGrow: 1, marginRight: '1rem' }}>
-            <HealthValue style={{ backgroundColor: immunity ? 'blue' : healthColor, width: `${health}%` }}></HealthValue>
+          <img className={lowHealth ? "pulse" : ""} src={heartIcon} />
+          <div style={{ flexGrow: 1, marginRight: "1rem" }}>
+            <HealthValue style={{ backgroundColor: immunity ? "blue" : healthColor, width: `${health}%` }}></HealthValue>
           </div>
         </HealthContainer>
       </UpperLeft>
@@ -67,7 +67,7 @@ export default function Hud() {
 }
 
 const base = css`
-  font-family: 'Sedgwick Ave', sans-serif;
+  font-family: "Sedgwick Ave", sans-serif;
   position: absolute;
   text-transform: uppercase;
   font-weight: 900;
