@@ -130,7 +130,7 @@ export default function Ship() {
           </mesh>
         </group>
       </group>
-      {immunity !== false && <pointLight ref={exhaust} scale={[1, 1, 1]} position={[0, 1, 30]} distance={100} intensity={1} color="orangered" />}
+      <pointLight ref={exhaust} scale={[1, 1, 1]} position={[0, 1, 30]} distance={100} intensity={1} color="orangered" />
     </group>
   )
 }

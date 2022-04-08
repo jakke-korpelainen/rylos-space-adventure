@@ -4,10 +4,27 @@ interface IWaveProps {
   words: string[]
 }
 
+const animationDelayTemplate = (index: number) => {
+  return `
+    span:nth-child(${index + 1}) {
+      animation-delay: ${`0.${index}s`};
+    }
+  `
+}
+
+/**
+ * Creates :nth-child styles for given length
+ * @param length amount to create
+ * @returns styles
+ */
+const createWaveDelayForLength = (length: number) => {
+  return new Array(length).fill(null).map((_, index) => animationDelayTemplate(index))
+}
+
 export const Wave = (props: IWaveProps) => (
   <WaveWrapper>
     {props.words.map((word) => (
-      <WaveWord key={word}>
+      <WaveWord length={word.length} key={word}>
         {[...word].map((char, index) => (
           <span key={`${char}-${index}`}>{char}</span>
         ))}
@@ -28,7 +45,7 @@ export const WaveWrapper = styled.div`
   }
 `
 
-export const WaveWord = styled.h1`
+export const WaveWord = styled.h1<{ length: number }>`
   display: flex;
   flex-wrap: nowrap;
 
@@ -47,31 +64,5 @@ export const WaveWord = styled.h1`
     animation: wave-text 1s ease-in-out infinite;
   }
 
-  span:nth-of-type(1) {
-    animation-delay: 0s;
-  }
-  span:nth-of-type(2) {
-    animation-delay: 0.1s;
-  }
-  span:nth-of-type(3) {
-    animation-delay: 0.2s;
-  }
-  span:nth-of-type(4) {
-    animation-delay: 0.3s;
-  }
-  span:nth-of-type(5) {
-    animation-delay: 0.4s;
-  }
-  span:nth-of-type(6) {
-    animation-delay: 0.5s;
-  }
-  span:nth-of-type(7) {
-    animation-delay: 0.6s;
-  }
-  span:nth-of-type(8) {
-    animation-delay: 0.7s;
-  }
-  span:nth-of-type(9) {
-    animation-delay: 0.8s;
-  }
+  ${(p) => createWaveDelayForLength(p.length)}
 `
