@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.js": "/rylos-space-adventure/static/js/main.b1ed5e3f.js",
+    "main.js": "/rylos-space-adventure/static/js/main.312d21c2.js",
     "static/media/rylos-road.png": "/rylos-space-adventure/static/media/rylos-road.86b24c20a4d7aac6fa31.png",
     "static/media/rylos-freak-lust.png": "/rylos-space-adventure/static/media/rylos-freak-lust.d42472e35cbc0fe09ab7.png",
     "static/media/rylos-misunderstood.jpg": "/rylos-space-adventure/static/media/rylos-misunderstood.d13d9c2d9a58312518ad.jpg",
@@ -33,9 +33,9 @@
     "static/media/cardiogram.svg": "/rylos-space-adventure/static/media/cardiogram.3d5622b7571b1003e584cd7f8e04588f.svg",
     "static/media/play.svg": "/rylos-space-adventure/static/media/play.496c51e4f5541724a9ff37767d8d3bf3.svg",
     "static/media/rewind.svg": "/rylos-space-adventure/static/media/rewind.4cd5b90722fc2fa952384467019864ca.svg",
-    "main.b1ed5e3f.js.map": "/rylos-space-adventure/static/js/main.b1ed5e3f.js.map"
+    "main.312d21c2.js.map": "/rylos-space-adventure/static/js/main.312d21c2.js.map"
   },
   "entrypoints": [
-    "static/js/main.b1ed5e3f.js"
+    "static/js/main.312d21c2.js"
   ]
 }
