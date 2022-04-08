@@ -1,60 +1,57 @@
 import rewindIcon from "../images/rewind.svg"
 import playIcon from "../images/play.svg"
 import { soundTrack } from "../audio"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import styled from "styled-components"
 
 export const Radio = () => {
-  const initialSongIndex = Math.floor(Math.random() * (soundTrack.length - 1 - 0 + 1) + 0)
-  const [currentSoundtrackIndex, setCurrentSoundtrackIndex] = useState(initialSongIndex)
-  const audioElement = useState(new Audio(soundTrack[currentSoundtrackIndex].songSrc))[0]
-  const currentTrack = soundTrack[currentSoundtrackIndex]
+  const initialIndex = Math.floor(Math.random() * (soundTrack.length - 1 - 0 + 1) + 0)
+  const [currentIndex, setCurrentIndex] = useState(initialIndex)
+  const songRef = useRef<HTMLAudioElement>(null)
 
+  const currentTrack = soundTrack[currentIndex]
+
+  // handle song change
   useEffect(() => {
-    audioElement.loop = true
-    audioElement.play()
-    return () => {
-      audioElement.pause()
-      audioElement.removeAttribute("src")
-      audioElement.load()
+    const newTrack = soundTrack[currentIndex]
+    if (songRef.current) {
+      // dispose previous
+      songRef.current.removeAttribute("src")
+      songRef.current.load()
+
+      // load new
+      songRef.current.setAttribute("src", newTrack.songSrc)
+      songRef.current.load()
     }
-  }, [])
-
-  useEffect(() => {
-    audioElement.pause()
-    audioElement.setAttribute("src", soundTrack[currentSoundtrackIndex].songSrc)
-    audioElement.load()
-    audioElement.play()
-  }, [currentSoundtrackIndex])
+  }, [currentIndex])
 
   const prev = () => {
-    const prevIndex = Math.max(currentSoundtrackIndex - 1, 0)
-    if (currentSoundtrackIndex === prevIndex) {
-      setCurrentSoundtrackIndex(soundTrack.length - 1)
-    } else {
-      setCurrentSoundtrackIndex(prevIndex)
-    }
+    const cappedIndex = Math.max(currentIndex - 1, 0)
+    const newIndex = currentIndex === cappedIndex ? soundTrack.length - 1 : cappedIndex
+    setCurrentIndex(newIndex)
   }
   const next = () => {
-    const nextIndex = Math.min(currentSoundtrackIndex + 1, soundTrack.length - 1)
-    if (nextIndex === currentSoundtrackIndex) {
-      setCurrentSoundtrackIndex(0)
-    } else {
-      setCurrentSoundtrackIndex(nextIndex)
-    }
+    const cappedIndex = Math.min(currentIndex + 1, soundTrack.length - 1)
+    const newIndex = currentIndex === cappedIndex ? 0 : cappedIndex
+    setCurrentIndex(newIndex)
   }
 
   const toggle = () => {
-    const isPlaying = audioElement.duration > 0 && !audioElement.paused
-    if (isPlaying) {
-      audioElement.pause()
-    } else {
-      audioElement.play()
+    if (songRef.current) {
+      const isPlaying = songRef.current.duration > 0 && !songRef.current.paused
+      if (isPlaying) {
+        songRef.current.pause()
+      } else {
+        songRef.current.play()
+      }
     }
   }
 
   return (
     <RadioWrapper>
+      <audio ref={songRef} autoPlay={true} loop>
+        <source src={currentTrack.songSrc} />
+      </audio>
       <RadioCover>
         <img alt="Album Cover" src={currentTrack.songCover} />
       </RadioCover>

@@ -1,6 +1,7 @@
 import { IObjectData } from "../IObjectData"
 import { DebouncedFunc } from "lodash"
 import { Camera } from "@react-three/fiber"
+import { IGameLoopParams } from "./IGameLoopParams"
 
 export interface IGameStateActions {
   game: {
@@ -8,6 +9,7 @@ export interface IGameStateActions {
     start: () => void
     credits: () => void
     reset: () => void
+    loop: (state: IGameLoopParams) => void
     init: (camera: Camera) => void
   }
   player: {

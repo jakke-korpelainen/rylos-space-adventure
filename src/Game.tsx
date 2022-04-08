@@ -51,6 +51,7 @@ export const Game = () => {
           gl={{ antialias: false }}
           camera={{ position: [0, 0, 2000], near: 0.01, far: 10000, fov }}
           onCreated={({ gl, camera }) => {
+            console.log("created")
             actions.game.init(camera)
             gl.toneMapping = THREE.CineonToneMapping
             gl.setClearColor(new THREE.Color("#020209"))

@@ -1,4 +1,4 @@
-import { useMemo, useEffect, Fragment } from "react"
+import { useMemo, useEffect, Fragment, useRef } from "react"
 import styled, { css, createGlobalStyle } from "styled-components"
 import { useGameStore } from "./store"
 import { Radio } from "./Menu/Radio"
@@ -28,27 +28,14 @@ export default function Hud() {
   const immunity = useGameStore((state) => state.immunity)
   const health = useGameStore((state) => state.health)
   const score = useMemo(() => (points >= 1000 ? (points / 1000).toFixed(1) + "K" : points), [points])
-
+  const heartbeatRef = useRef<HTMLAudioElement>(null)
   const lowHealth = isLowHealth(health)
 
   useEffect(() => {
-    const audioElement = new Audio()
-    audioElement.volume = 1
-    audioElement.loop = true
-
-    if (lowHealth) {
-      audioElement.setAttribute("src", heartbeat)
-      audioElement.load()
-      audioElement.play()
-    } else {
-      audioElement.pause()
-      audioElement.removeAttribute("src")
-      audioElement.load()
-    }
-    return () => {
-      audioElement.pause()
-      audioElement.removeAttribute("src")
-      audioElement.load()
+    if (heartbeatRef.current && lowHealth) {
+      heartbeatRef.current.play()
+    } else if (heartbeatRef.current) {
+      heartbeatRef.current.pause()
     }
   }, [lowHealth])
 
@@ -56,6 +43,9 @@ export default function Hud() {
     <Fragment>
       <UpperLeft>
         <HealthContainer>
+          <audio autoPlay={false} ref={heartbeatRef} loop>
+            <source src={heartbeat} />
+          </audio>
           <img alt="Health" className={lowHealth ? "pulse" : ""} src={heartIcon} />
           <HealthValueContainer>
             <HealthValue health={health} healthColor={getHealthColor(immunity, health)}></HealthValue>

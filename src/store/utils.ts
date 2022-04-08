@@ -13,7 +13,7 @@ export const createInitialValues = (track: THREE.TubeBufferGeometry) => {
     health: 100,
     lasers: [],
     explosions: [],
-    rocks: randomData(100, track, 150, 8, () => 1 + Math.random() * 2.5),
+    rocks: [],
     immunity: true,
     clock: null,
 

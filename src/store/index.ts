@@ -7,8 +7,10 @@ import { IGameState } from "./IGameState"
 import * as THREE from "three"
 import { createInitialValues, randomData } from "./utils"
 import { IObjectData } from "../IObjectData"
+import { IGameLoopParams } from "./IGameLoopParams"
 
 const COLLISION_DAMAGE = 20
+const SPAWN_PROTECTION_DURATION = 3000 // ms
 const DIFFICULTY_INCREASE_INTERVAL = 15 // seconds
 const MAXIMUM_TRAVEL_SPEED = 10000
 const FIRING_DELAY = 200 // 300 rpm
@@ -35,98 +37,109 @@ export const useGameStore = create<IGameState>((set, get) => {
           set({ menu: "credits" })
         },
         reset: () => {
-          set({ menu: "game", health: 100, immunity: true, points: 0 })
+          const initialValues = createInitialValues(track)
+          set({ ...initialValues, menu: "game" })
+        },
+        loop: (state: IGameLoopParams) => {
+          const { mutation, clock, actions } = state
+
+          // increase travel speed every (n) seconds overtime with a hard cap at very difficult
+          const time = Date.now()
+          const difficultyLevel = clock.getElapsedTime() / DIFFICULTY_INCREASE_INTERVAL
+          const difficultyModifier = 40 - difficultyLevel
+          const looptime = Math.max(difficultyModifier * 1000, MAXIMUM_TRAVEL_SPEED)
+          const t = (mutation.t = ((time - mutation.startTime!) % looptime) / looptime)
+
+          mutation.position = track.parameters.path.getPointAt(t)
+          mutation.position.multiplyScalar(mutation.scale)
+
+          // test for wormhole/warp
+          let warping = false
+          if (t > 0.3 && t < 0.4) {
+            if (!warping) {
+              warping = true
+              audio.playAudio(audio.warp)
+            }
+          } else if (t > 0.5) {
+            warping = false
+          }
+
+          // test for hits
+          const { rocks } = get()
+          const r = rocks.filter(actions.world.test)
+
+          const previous = mutation.hits
+          mutation.hits = r.length
+
+          // targeting crosshair is on top of something to hit
+          if (previous === 0 && mutation.hits) {
+            audio.playAudio(audio.click)
+          }
+
+          // handle laser hits
+          const lasers = get().lasers
+          if (mutation.hits && lasers.length && time - lasers[lasers.length - 1] < 100) {
+            const updates = r.map((data) => ({ ...data }))
+
+            // rock destructor explodes rocks
+            updates.forEach((u) => actions.world.removeRock(u.guid))
+
+            // replace shot rocks with new ones
+            actions.world.addRocks(mutation.hits)
+
+            set((state) => ({
+              points: state.points + r.length * 100
+            }))
+          }
+
+          // // handle player movement collisions
+          const rockCollisions = r.filter((data) => data.distance < 30)
+          if (rockCollisions.length > 0) {
+            rockCollisions.forEach((u) => actions.world.removeRock(u.guid))
+            actions.player.damage()
+          }
         },
         init: (camera: Camera) => {
-          const { immunity, mutation, actions } = get()
+          set({ camera, clock: new THREE.Clock(true) })
+          const { clock, immunity, mutation, actions } = get()
 
+          // get highscore from storage
           const sessionHighscore = localStorage.getItem("rylos-space-adventure-hiscore")
           if (sessionHighscore && Number(sessionHighscore)) {
             set({ highScore: Number(sessionHighscore) })
           }
 
-          set({ camera, clock: new THREE.Clock(true) })
+          // add rocks to world
+          actions.world.addRocks(100)
 
-          const clock = get().clock!
+          mutation.t = 0
           mutation.startTime = Date.now()
-
           audio.playAudio(audio.engine, 0.4, true)
           audio.playAudio(audio.engine2, 0.4, true)
-
           if (immunity && immunityTO === undefined) {
-            window.setTimeout(() => set({ immunity: false }), 5000)
+            window.setTimeout(() => set({ immunity: false }), SPAWN_PROTECTION_DURATION)
           }
 
-          const gameLoopEffect: any = () => {
-            // increase travel speed every (n) seconds overtime with a hard cap at very difficult
-            const time = Date.now()
-            const difficultyLevel = clock.getElapsedTime() / DIFFICULTY_INCREASE_INTERVAL
-            const difficultyModifier = 40 - difficultyLevel
-            const looptime = Math.max(difficultyModifier * 1000, MAXIMUM_TRAVEL_SPEED)
-            const t = (mutation.t = ((time - mutation.startTime!) % looptime) / looptime)
-            mutation.position = track.parameters.path.getPointAt(t)
-            mutation.position.multiplyScalar(mutation.scale)
-
-            // test for wormhole/warp
-            let warping = false
-            if (t > 0.3 && t < 0.4) {
-              if (!warping) {
-                warping = true
-                audio.playAudio(audio.warp)
-              }
-            } else if (t > 0.5) {
-              warping = false
-            }
-
-            // test for hits
-            const { rocks } = get()
-            const r = rocks.filter(actions.world.test)
-
-            const previous = mutation.hits
-            mutation.hits = r.length
-            if (previous === 0 && mutation.hits) {
-              audio.playAudio(audio.click)
-            }
-
-            // handle laser hits
-            const lasers = get().lasers
-            if (mutation.hits && lasers.length && time - lasers[lasers.length - 1] < 100) {
-              const updates = r.map((data) => ({ ...data }))
-
-              // rock destructor explodes rocks
-              updates.forEach((u) => actions.world.removeRock(u.guid))
-
-              // replace shot rocks with new ones
-              actions.world.addRocks(mutation.hits)
-
-              set((state) => ({
-                points: state.points + r.length * 100
-              }))
-            }
-
-            // // handle player movement collisions
-            const rockCollisions = r.filter((data) => data.distance < 30)
-            if (rockCollisions.length > 0) {
-              // destroy collided rocks
-              // set({ rocks: rocks.filter((value) => !rockCollisions.includes(value)) })
-
-              audio.playAudio(audio.crash, 1, false)
-              rockCollisions.forEach((u) => actions.world.removeRock(u.guid))
-              actions.player.damage()
-            }
+          const loopState = {
+            actions,
+            clock: clock!,
+            mutation
           }
 
-          addEffect(gameLoopEffect)
+          const loopFn: any = () => void actions.game.loop(loopState)
+
+          addEffect(loopFn)
         }
       },
       player: {
         damage() {
-          const { immunity, actions } = get()
+          const { immunity, actions, health } = get()
 
           // spawn protection
           if (immunity === false) {
-            const newHealth = Math.max(0, get().health - COLLISION_DAMAGE)
+            const newHealth = Math.max(0, health - COLLISION_DAMAGE)
             set({ health: newHealth })
+            audio.playAudio(audio.crash, 1, false)
           }
 
           // death

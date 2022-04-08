@@ -17,8 +17,10 @@ export default function Ship() {
   const { nodes } = useLoader(GLTFLoader, "/rylos-space-adventure/ship.gltf") as any
   const clock = useGameStore((state) => state.clock)
   const mutation = useGameStore((state) => state.mutation)
-  const { mouse, ray } = mutation
+  const immunity = useGameStore((state) => state.immunity)
   const lasers = useGameStore((state) => state.lasers)
+
+  const { mouse, ray } = mutation
   const main = useRef<THREE.Group>()
   const laserGroup = useRef<THREE.Group>()
   const laserLight = useRef<THREE.PointLight>()
@@ -37,16 +39,6 @@ export default function Ship() {
       main.current.rotation.y += (-mouse.x / 1200 - main.current.rotation.y) * 0.2
       main.current.position.x += (mouse.x / 10 - main.current.position.x) * 0.2
       main.current.position.y += (25 + -mouse.y / 10 - main.current.position.y) * 0.2
-    }
-
-    if (exhaust.current) {
-      if (clock) {
-        exhaust.current.scale.x = 1 + Math.sin(clock.getElapsedTime() * 200)
-        exhaust.current.scale.y = 1 + Math.sin(clock.getElapsedTime() * 200)
-      }
-
-      exhaust.current.scale.x = 0.01
-      exhaust.current.scale.y = 0.01
     }
 
     if (laserGroup.current) {
@@ -79,6 +71,14 @@ export default function Ship() {
 
   return (
     <group ref={main}>
+      {immunity && (
+        <group scale={[1, 1, 1]}>
+          <mesh>
+            <sphereGeometry args={[10, 10, 10]} />
+            <meshBasicMaterial color="lightblue" />
+          </mesh>
+        </group>
+      )}
       <group scale={[3.5, 3.5, 3.5]}>
         <group ref={cross} position={[0, 0, -300]} name="cross">
           <mesh renderOrder={1000} material={crossMaterial}>
@@ -132,7 +132,8 @@ export default function Ship() {
           </mesh>
         </group>
       </group>
-      <pointLight ref={exhaust} position={[0, 1, 30]} distance={100} intensity={1} color="orangered" />
+
+      <pointLight ref={exhaust} scale={[1, 1, 1]} position={[0, 1, 30]} distance={100} intensity={1} color="orangered" />
     </group>
   )
 }

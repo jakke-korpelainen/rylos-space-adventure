@@ -3,6 +3,7 @@ import { useFrame } from "@react-three/fiber"
 import { useGameStore } from "../store"
 import * as audio from "../audio"
 import * as THREE from "three"
+import throttle from "lodash.throttle"
 
 const makeParticles = (color: string, speed: number) => {
   return {
@@ -36,6 +37,12 @@ interface IExplosionProps {
 }
 
 const EXPLOSION_DURATION = 1000
+const MAXIMUM_EXPLOSION_INTERVAL = 50
+
+// to fix audio clipping issues in some cases
+const explosionSound = throttle(() => {
+  void audio.playAudio(new Audio(audio.mp3.explosion), 0.2)
+}, MAXIMUM_EXPLOSION_INTERVAL)
 
 export const Explosion = (props: IExplosionProps) => {
   const { dummy } = useGameStore((state) => state.mutation)
@@ -45,7 +52,7 @@ export const Explosion = (props: IExplosionProps) => {
 
   const particles = useMemo(() => [makeParticles("white", 0.8), makeParticles("firebrick", 0.6), makeParticles("#f66a00", 0.3)], [])
 
-  useEffect(() => void audio.playAudio(new Audio(audio.mp3.explosion), 0.2), [])
+  useEffect(() => explosionSound(), [])
 
   // destroy self after timer
   useEffect(() => {
