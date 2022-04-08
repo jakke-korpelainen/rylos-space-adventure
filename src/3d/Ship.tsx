@@ -71,14 +71,12 @@ export default function Ship() {
 
   return (
     <group ref={main}>
-      {immunity && (
-        <group scale={[1, 1, 1]}>
-          <mesh>
-            <sphereGeometry args={[10, 10, 10]} />
-            <meshBasicMaterial color="lightblue" />
-          </mesh>
-        </group>
-      )}
+      <group visible={immunity}>
+        <mesh>
+          <sphereGeometry args={[13, 8]} />
+          <meshBasicMaterial color="#1a73c0" fog={false} reflectivity={0.2} />
+        </mesh>
+      </group>
       <group scale={[3.5, 3.5, 3.5]}>
         <group ref={cross} position={[0, 0, -300]} name="cross">
           <mesh renderOrder={1000} material={crossMaterial}>
@@ -132,8 +130,7 @@ export default function Ship() {
           </mesh>
         </group>
       </group>
-
-      <pointLight ref={exhaust} scale={[1, 1, 1]} position={[0, 1, 30]} distance={100} intensity={1} color="orangered" />
+      {immunity !== false && <pointLight ref={exhaust} scale={[1, 1, 1]} position={[0, 1, 30]} distance={100} intensity={1} color="orangered" />}
     </group>
   )
 }
