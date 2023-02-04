@@ -21,9 +21,17 @@ import rylosClimateSong from "./rylos-climate.mp3"
 import rylosBlackLiquidCover from "../images/rylos-black-liquid.jpg"
 import rylosBlackLiquidSong from "./rylos-black-liquid.mp3"
 
+import rylosHighwayOfLoveCover from "../images/rylos-highway-of-love.jpg"
+import rylosHighwayOfLoveSong from "./rylos-highway-of-love.mp3"
+
 const mp3 = { explosion: explosionAudio }
 
 const soundTrack = [
+  {
+    songName: "Rylos - Highway of Love",
+    songCover: rylosHighwayOfLoveCover,
+    songSrc: rylosHighwayOfLoveSong
+  },
   { songName: "Rylos - Freak Lust", songCover: rylosFreakLustCover, songSrc: rylosFreakLustSong },
   {
     songName: "Rylos - Misunderstood",

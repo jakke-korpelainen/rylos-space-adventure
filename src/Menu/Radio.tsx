@@ -130,6 +130,7 @@ const RadioTrackDetails = styled.div`
   background: black;
 
   span {
+    font-weight: 300;
     white-space: nowrap;
     padding-left: 100%;
     top: 8px;
