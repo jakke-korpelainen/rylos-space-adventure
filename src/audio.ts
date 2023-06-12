@@ -80,7 +80,7 @@ export const Soundtrack: Record<
   },
   ICEBREAKER: {
     volume: 0.7,
-    name: "Rylos - Icebreaker",
+    name: "Rylos - Icebreaker Feat. Piritta Lumous",
     src: "/rylos-space-adventure/soundtrack/rylos-icebreaker.mp3",
     album: "/rylos-space-adventure/rylos-logo.png"
   },
