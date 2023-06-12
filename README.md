@@ -1,6 +1,6 @@
 # Rylos Space Adventure
 
-Based on tremendous work by [Paul Henschel](https://github.com/drcmda)
+Based on tremendous work by [drcmda](https://github.com/drcmda)
 
 npm i
 

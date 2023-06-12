@@ -48,8 +48,6 @@ export const Radio = () => {
     Howler.mute(muted)
   }, [muted])
 
-  console.log("Radio: Rendering")
-
   return (
     <RadioWrapper>
       <RadioCover>
