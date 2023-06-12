@@ -11,7 +11,7 @@ import Rig from "./3d/Rig"
 import { Canvas } from "@react-three/fiber"
 import { Suspense, useState, useEffect } from "react"
 import styled from "styled-components"
-import { engine, engine2, warp } from "./audio"
+
 import { useGameStore } from "./store"
 import * as THREE from "three"
 
@@ -22,9 +22,7 @@ export const Game = () => {
 
   useEffect(() => {
     return () => {
-      engine.pause()
-      engine2.pause()
-      warp.pause()
+      Howler.stop()
     }
   }, [])
 
@@ -39,7 +37,9 @@ export const Game = () => {
           actions.player.move({ x: clientX, y: clientY })
         }}
         onPointerUp={actions.player.cancelAutofire}
-        onPointerMove={(e) => actions.player.move({ x: e.clientX, y: e.clientY })}
+        onPointerMove={(e) =>
+          actions.player.move({ x: e.clientX, y: e.clientY })
+        }
         onPointerDown={(e) => {
           actions.player.move({ x: e.clientX, y: e.clientY })
           actions.player.autofire(e)

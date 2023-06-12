@@ -1,6 +1,6 @@
 import { v4 as uuid } from "uuid"
 import * as THREE from "three"
-import { IObjectData } from "../IObjectData"
+import { ObjectData } from "../types/ObjectData"
 
 export const createInitialValues = (track: THREE.TubeBufferGeometry) => {
   return {
@@ -25,7 +25,13 @@ export const createInitialValues = (track: THREE.TubeBufferGeometry) => {
       scale: 15,
       fov: 70,
       hits: 0,
-      particles: randomData(1500, track, 100, 1, () => 0.5 + Math.random() * 0.8),
+      particles: randomData(
+        1500,
+        track,
+        100,
+        1,
+        () => 0.5 + Math.random() * 0.8
+      ),
       looptime: 40 * 1000,
       binormal: new THREE.Vector3(),
       normal: new THREE.Vector3(),
@@ -39,17 +45,29 @@ export const createInitialValues = (track: THREE.TubeBufferGeometry) => {
   }
 }
 
-export function randomData(count: number, track: THREE.TubeBufferGeometry, radius: number, size: number, scale: (() => number) | number) {
+export function randomData(
+  count: number,
+  track: THREE.TubeBufferGeometry,
+  radius: number,
+  size: number,
+  scale: (() => number) | number
+) {
   return new Array(count).fill(null).map(() => {
     const t = Math.random()
     const position = track.parameters.path.getPointAt(t)
     position.multiplyScalar(15)
     const offset = position
       .clone()
-      .add(new THREE.Vector3(-radius + Math.random() * radius * 2, -radius + Math.random() * radius * 2, -radius + Math.random() * radius * 2))
+      .add(
+        new THREE.Vector3(
+          -radius + Math.random() * radius * 2,
+          -radius + Math.random() * radius * 2,
+          -radius + Math.random() * radius * 2
+        )
+      )
     const speed = 0.1 + Math.random()
 
-    const objectData: IObjectData = {
+    const objectData: ObjectData = {
       guid: uuid(),
       scale: typeof scale === "function" ? scale() : scale,
       size,

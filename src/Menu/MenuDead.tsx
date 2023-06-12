@@ -1,20 +1,21 @@
 import { Menu, MenuActions, MenuActionItem } from "./Menu"
 import styled from "styled-components"
-import gameOver from "../audio/game-over.wav"
 import highscoreIcon from "../images/award.svg"
 import { useGameStore } from "../store"
-import startAudio from "../audio/start.ogg"
+import { AudioList, playAudio } from "../audio"
+import { useEffect } from "react"
 
 export const MenuDead = () => {
   const highScore = useGameStore((state) => state.highScore)
   const lastPoints = useGameStore((state) => state.lastPoints)
   const reset = useGameStore((state) => state.actions.game.reset)
 
+  useEffect(() => {
+    playAudio(AudioList.GAME_OVER)
+  }, [])
+
   return (
     <Menu>
-      <audio autoPlay>
-        <source src={gameOver} />
-      </audio>
       <h1>Game Over</h1>
       <Scores>
         <p>Score: {lastPoints}</p>
@@ -30,7 +31,7 @@ export const MenuDead = () => {
       <MenuActions>
         <MenuActionItem
           onClick={() => {
-            new Audio(startAudio).play()
+            playAudio(AudioList.START)
             reset()
           }}>
           Play Again

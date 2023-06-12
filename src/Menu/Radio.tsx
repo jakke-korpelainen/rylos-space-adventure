@@ -1,65 +1,65 @@
 import rewindIcon from "../images/rewind.svg"
 import playIcon from "../images/play.svg"
-import { soundTrack } from "../audio"
-import { useEffect, useRef, useState } from "react"
+import { playAudio, Soundtrack } from "../audio"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import styled from "styled-components"
 
+const randomIndex = Math.floor(Math.random() * Object.keys(Soundtrack).length)
+
 export const Radio = () => {
-  const initialIndex = Math.floor(Math.random() * (soundTrack.length - 1 - 0 + 1) + 0)
-  const [currentIndex, setCurrentIndex] = useState(initialIndex)
-  const songRef = useRef<HTMLAudioElement>(null)
+  const [muted, setMuted] = useState(false)
+  const [currentSongIndex, setCurrentSongIndex] = useState(randomIndex)
 
-  const currentTrack = soundTrack[currentIndex]
+  const currentSong = useMemo(
+    () => Object.values(Soundtrack)[currentSongIndex],
+    [currentSongIndex]
+  )
 
-  // handle song change
+  const toggle = () => setMuted(!muted)
+
+  const prev = useCallback(() => {
+    const cappedIndex = Math.max(currentSongIndex - 1, 0)
+    const newIndex =
+      currentSongIndex === cappedIndex
+        ? Object.keys(Soundtrack).length - 1
+        : cappedIndex
+    setCurrentSongIndex(newIndex)
+  }, [currentSongIndex, setCurrentSongIndex])
+
+  const next = useCallback(() => {
+    const cappedIndex = Math.min(
+      currentSongIndex + 1,
+      Object.keys(Soundtrack).length - 1
+    )
+    const newIndex = currentSongIndex === cappedIndex ? 0 : cappedIndex
+    setCurrentSongIndex(newIndex)
+  }, [currentSongIndex, setCurrentSongIndex])
+
   useEffect(() => {
-    const newTrack = soundTrack[currentIndex]
-    if (songRef.current) {
-      // dispose previous
-      songRef.current.removeAttribute("src")
-      songRef.current.load()
-
-      // load new
-      songRef.current.setAttribute("src", newTrack.songSrc)
-      songRef.current.load()
+    if (currentSong) {
+      playAudio(currentSong)
     }
-  }, [currentIndex])
-
-  const prev = () => {
-    const cappedIndex = Math.max(currentIndex - 1, 0)
-    const newIndex = currentIndex === cappedIndex ? soundTrack.length - 1 : cappedIndex
-    setCurrentIndex(newIndex)
-  }
-  const next = () => {
-    const cappedIndex = Math.min(currentIndex + 1, soundTrack.length - 1)
-    const newIndex = currentIndex === cappedIndex ? 0 : cappedIndex
-    setCurrentIndex(newIndex)
-  }
-
-  const toggle = () => {
-    if (songRef.current) {
-      const isPlaying = songRef.current.duration > 0 && !songRef.current.paused
-      if (isPlaying) {
-        songRef.current.pause()
-      } else {
-        songRef.current.play()
-      }
+    return () => {
+      Howler.stop()
     }
-  }
+  }, [currentSong])
+
+  useEffect(() => {
+    Howler.mute(muted)
+  }, [muted])
+
+  console.log("Radio: Rendering")
 
   return (
     <RadioWrapper>
-      <audio ref={songRef} autoPlay={true} loop>
-        <source src={currentTrack.songSrc} />
-      </audio>
       <RadioCover>
-        <img alt="Album Cover" src={currentTrack.songCover} />
+        <img alt="Album Cover" src={currentSong.album} />
       </RadioCover>
       <RadioControls>
         <RadioTrack>
           <RadioTrackDetails>
-            <span>{currentTrack?.songName}</span>
-            <span className="last">{currentTrack?.songName}</span>
+            <span>{currentSong?.name}</span>
+            <span className="last">{currentSong?.name}</span>
           </RadioTrackDetails>
         </RadioTrack>
         <RadioActions>

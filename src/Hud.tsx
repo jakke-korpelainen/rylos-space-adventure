@@ -1,10 +1,11 @@
-import { useMemo, useEffect, Fragment, useRef } from "react"
+import { useMemo, useEffect, Fragment, useState } from "react"
 import styled, { css, createGlobalStyle } from "styled-components"
 import { useGameStore } from "./store"
 import { Radio } from "./Menu/Radio"
 import heartIcon from "./images/cardiogram.svg"
-import heartbeat from "./audio/heartbeat.wav"
 import garbage from "./images/garbage.svg"
+import { AudioList, playAudio } from "./audio"
+import { Howl } from "howler"
 
 const LOW_HEALTH_TRESHOLD = 50
 const HEALTH_COLOR_LOW = "#c5411e"
@@ -24,18 +25,22 @@ const getHealthColor = (immunity: boolean, health: number) => {
 }
 
 export default function Hud() {
+  const [heartbeatAudio, setHeartbeatAudio] = useState<Howl>()
   const points = useGameStore((state) => state.points)
   const immunity = useGameStore((state) => state.immunity)
   const health = useGameStore((state) => state.health)
-  const score = useMemo(() => (points >= 1000 ? (points / 1000).toFixed(1) + "K" : points), [points])
-  const heartbeatRef = useRef<HTMLAudioElement>(null)
+  const score = useMemo(
+    () => (points >= 1000 ? (points / 1000).toFixed(1) + "K" : points),
+    [points]
+  )
   const lowHealth = isLowHealth(health)
 
   useEffect(() => {
-    if (heartbeatRef.current && lowHealth) {
-      heartbeatRef.current.play()
-    } else if (heartbeatRef.current) {
-      heartbeatRef.current.pause()
+    if (lowHealth) {
+      const audio = playAudio(AudioList.HEARTBEAT)
+      setHeartbeatAudio(audio)
+    } else if (heartbeatAudio) {
+      heartbeatAudio.stop()
     }
   }, [lowHealth])
 
@@ -43,17 +48,23 @@ export default function Hud() {
     <Fragment>
       <UpperLeft>
         <HealthContainer>
-          <audio autoPlay={false} ref={heartbeatRef} loop>
-            <source src={heartbeat} />
-          </audio>
-          <img alt="Health" className={lowHealth ? "pulse" : ""} src={heartIcon} />
+          <img
+            alt="Health"
+            className={lowHealth ? "pulse" : ""}
+            src={heartIcon}
+          />
           <HealthValueContainer>
-            <HealthValue health={health} healthColor={getHealthColor(immunity, health)}></HealthValue>
+            <HealthValue
+              health={health}
+              healthColor={getHealthColor(immunity, health)}></HealthValue>
           </HealthValueContainer>
         </HealthContainer>
       </UpperLeft>
       <UpperRight>
-        <a target="_blank" rel="noopener noreferrer" href="https://www.rylosplanet.fi/">
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://www.rylosplanet.fi/">
           Rylos Planet
         </a>
       </UpperRight>

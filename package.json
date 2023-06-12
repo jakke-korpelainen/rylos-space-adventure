@@ -11,7 +11,9 @@
   ],
   "dependencies": {
     "@react-three/fiber": "6.0.15",
+    "@types/howler": "^2.2.7",
     "@types/uuid": "^8.3.4",
+    "howler": "^2.2.3",
     "lodash.throttle": "^4.1.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
