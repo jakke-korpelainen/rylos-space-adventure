@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.js": "/rylos-space-adventure/static/js/main.cc0d01b7.js",
+    "main.js": "/rylos-space-adventure/static/js/main.13958252.js",
     "static/media/earth.jpg": "/rylos-space-adventure/static/media/earth.45ed3b771ffd54ac13a1.jpg",
     "static/media/moon.png": "/rylos-space-adventure/static/media/moon.27019542f265c7857404.png",
     "static/media/SedgwickAve-Regular.woff2": "/rylos-space-adventure/static/media/SedgwickAve-Regular.875f9a3b0a64cfdd15b6.woff2",
@@ -11,9 +11,9 @@
     "static/media/cardiogram.svg": "/rylos-space-adventure/static/media/cardiogram.3d5622b7571b1003e584cd7f8e04588f.svg",
     "static/media/play.svg": "/rylos-space-adventure/static/media/play.d6cb2c4fbfddbe80f2f81b6b00ce8ea1.svg",
     "static/media/rewind.svg": "/rylos-space-adventure/static/media/rewind.4cd5b90722fc2fa952384467019864ca.svg",
-    "main.cc0d01b7.js.map": "/rylos-space-adventure/static/js/main.cc0d01b7.js.map"
+    "main.13958252.js.map": "/rylos-space-adventure/static/js/main.13958252.js.map"
   },
   "entrypoints": [
-    "static/js/main.cc0d01b7.js"
+    "static/js/main.13958252.js"
   ]
 }
